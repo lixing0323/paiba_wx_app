@@ -23,15 +23,16 @@
       }
     },
     {
-      "path": "pages/loadingPage/index",
+      "path": "pages/tabBar/homepage/search",
       "style": {
-        "navigationBarTitleText": "成功"
+        "navigationBarTitleText": "服务",
+        "navigationBarTextStyle": "black"
       }
     },
     {
-      "path": "pages/tabBar/message/notice-detail",
+      "path": "pages/loadingPage/index",
       "style": {
-        "navigationBarTitleText": "公告详情"
+        "navigationBarTitleText": "成功"
       }
     }
   ],
@@ -39,57 +40,21 @@
       "root": "packageA",
       "name": "packageA",
       "pages": [{
-          "path": "pages/common/loan/index",
-          "style": {
-            "navigationBarTitleText": "我的贷款"
-          }
-        },
-        {
-          "path": "pages/common/loan/detail-card",
-          "style": {
-            "navigationBarTitleText": "贷款详情"
-          }
-        },
-        {
-          "path": "pages/common/requirement/detail",
-          "style": {
-            "navigationBarTitleText": "需求详情"
-          }
-        },
-        {
-          "path": "pages/common/apply-record/index",
-          "style": {
-            "navigationBarTitleText": "产品申请"
-          }
-        },
-        {
-          "path": "pages/common/apply-record/detail",
-          "style": {
-            "navigationBarTitleText": "申请详情"
-          }
-        },
-        {
-          "path": "pages/common/loan-product/detail",
-          "style": {
-            "navigationBarTitleText": "产品详情"
-          }
-        },
-        {
-          "path": "pages/common/financial-product/detail",
-          "style": {
-            "navigationBarTitleText": "产品详情"
-          }
-        },
-        {
           "path": "pages/login/index",
           "style": {
             "navigationBarTitleText": "登录"
           }
         },
         {
-          "path": "pages/mine/userInfo/index",
+          "path": "pages/mine/account/index",
           "style": {
-            "navigationBarTitleText": "个人信息"
+            "navigationBarTitleText": "我的帐号"
+          }
+        },
+        {
+          "path": "pages/mine/customer-service/index",
+          "style": {
+            "navigationBarTitleText": "平台客服"
           }
         },
         {
@@ -99,33 +64,9 @@
           }
         },
         {
-          "path": "pages/mine/feedback/create",
+          "path": "pages/mine/setting/index",
           "style": {
-            "navigationBarTitleText": "新建反馈"
-          }
-        },
-        {
-          "path": "pages/mine/feedback/detail",
-          "style": {
-            "navigationBarTitleText": "反馈详情"
-          }
-        },
-        {
-          "path": "pages/service/detail",
-          "style": {
-            "navigationBarTitleText": "服务详情"
-          }
-        },
-        {
-          "path": "pages/service/write-off",
-          "style": {
-            "navigationBarTitleText": "核销记录"
-          }
-        },
-        {
-          "path": "pages/service/index",
-          "style": {
-            "navigationBarTitleText": "已购服务"
+            "navigationBarTitleText": "我的设置"
           }
         }
       ]

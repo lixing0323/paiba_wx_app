@@ -1,6 +1,6 @@
 <template>
   <view :style="{'marginTop': marginTop, 'marginBottom': marginBottom}">
-    <uni-card :padding="padding" :margin="margin" space="0" :is-shadow="false" :border="false" is-full>
+    <uni-card :padding="padding" :margin="margin" space="0" :is-shadow="true" :border="true">
       <slot></slot>
     </uni-card>
   </view>
@@ -12,7 +12,7 @@
     props: {
       padding: {
         type: String,
-        default: '0'
+        default: '10px'
       },
       margin: {
         type: String,

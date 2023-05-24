@@ -91,7 +91,6 @@
 		font-family: uniicons;
 		text-decoration: none;
 		text-align: center;
-    vertical-align: middle;
 	}
 
 </style>

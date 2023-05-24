@@ -22,8 +22,11 @@
             </uni-easyinput>
           </view>
           <view style="margin-top: 15px;">
-            <uni-easyinput height="80rpx" contentHeight="80rpx" type="password" prefixIcon="locked"
-              v-model="loginForm.password" placeholder="请输入密码" :inputBorder="false" class="input">
+            <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="locked" v-model="loginForm.password"
+              placeholder="请输入验证码" :inputBorder="false" class="input">
+              <template v-slot:right>
+                <view class="sms-code-bt">{{ code }}</view>
+              </template>
             </uni-easyinput>
           </view>
           <button type="primary" class="wx-login-bt normal-login-bt"
@@ -63,26 +66,15 @@
     data() {
       return {
         logoSrc: '',
-        describe: '服务小微企业的专业平台',
         wechatLogo: require('@/static/img/wechat.png'),
         managerLogo: require('@/static/img/manager-login.png'),
-        customerLogo: require('@/static/img/customer-login.png'),
-        boxChecked: false,
-        radioValue: 0,
         isWxLogin: true,
         loginForm: {
-          username: undefined,
-          password: undefined,
-          userType: 'platform_staff',
-          action: 'login'
+          username: undefined
         },
         msgType: 'success',
         messageText: undefined,
-        wxUserInfo: undefined,
-        wxUserToken: undefined,
-        preRouter: undefined,
-        codeQuery: undefined,
-        version: undefined
+        code: '获取验证码'
       };
     },
     onLoad(params) {
@@ -289,5 +281,11 @@
     line-height: 35rpx;
     font-size: 35rpx;
     color: #ffffff;
+  }
+
+  .sms-code-bt {
+    padding: 10rpx 20rpx;
+    border-radius: 20rpx;
+    border: 1px solid #333;
   }
 </style>

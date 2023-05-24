@@ -15,11 +15,8 @@
             <image class="uni-card__header-avatar-image" :src="thumbnail" mode="aspectFit" />
           </view>
           <view class="uni-card__header-content">
-            <text class="uni-card__header-content-title uni-ellipsis"
-              :style="{fontWeight: titleStyle.fontWeight, fontSize: titleStyle.fontSize}">{{ title }}</text>
-            <text v-if="title&&subTitle" class="uni-card__header-content-subtitle uni-ellipsis"
-             :style="{fontWeight: subStyle.fontWeight, fontSize: subStyle.fontSize}"
-            >{{ subTitle }}</text>
+            <text class="uni-card__header-content-title uni-ellipsis">{{ title }}</text>
+            <text v-if="title&&subTitle" class="uni-card__header-content-subtitle uni-ellipsis">{{ subTitle }}</text>
           </view>
         </view>
         <view class="uni-card__header-extra" @click="onClick('extra')">
@@ -63,24 +60,6 @@
       title: {
         type: String,
         default: ''
-      },
-      titleStyle: {
-        type: Object,
-        default () {
-          return {
-            fontWeight: 'normal',
-            fontSize: undefined
-          }
-        }
-      },
-      subStyle: {
-        type: Object,
-        default () {
-          return {
-            fontWeight: 'normal',
-            fontSize: undefined
-          }
-        }
       },
       subTitle: {
         type: String,
@@ -139,24 +118,24 @@
 
 <style lang="scss">
   $uni-border-3: #EBEEF5 !default;
-  $uni-shadow-base:0 0px 6px 1px rgba($color: #a5a5a5, $alpha: 0.2) !default;
+  $uni-shadow-base: 0 0px 6px 1px rgba($color: #a5a5a5, $alpha: 0.2) !default;
   $uni-main-color: #3a3a3a !default;
   $uni-base-color: #6a6a6a !default;
   $uni-secondary-color: #909399 !default;
   $uni-spacing-sm: 8px !default;
-  $uni-border-color:$uni-border-3;
+  $uni-border-color: $uni-border-3;
   $uni-shadow: $uni-shadow-base;
   $uni-card-title: 15px;
-  $uni-cart-title-color:$uni-main-color;
+  $uni-cart-title-color: $uni-main-color;
   $uni-card-subtitle: 12px;
-  $uni-cart-subtitle-color:$uni-secondary-color;
+  $uni-cart-subtitle-color: $uni-secondary-color;
   $uni-card-spacing: 10px;
   $uni-card-content-color: $uni-base-color;
 
   .uni-card {
     margin: $uni-card-spacing;
     padding: 0 $uni-spacing-sm;
-    border-radius: 4px;
+    border-radius: 20rpx;
     overflow: hidden;
     font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
     background-color: #fff;

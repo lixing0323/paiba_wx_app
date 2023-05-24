@@ -1,9 +1,10 @@
 <template>
   <view class="homepage-container">
     <view class="search-bar-container">
-      <uni-search-bar v-model="listQuery.search" ref="searchBar" placeholder="请输入搜索内容" border="none" @input="search"
-        @clear="clear" cancelButton="none" rightSearchButton="none" bg-color="#F5F5F5">
+      <uni-search-bar class="search-input" v-model="listQuery.search" ref="searchBar" placeholder="搜索内容" border="none"
+        @input="search" @clear="clear" cancelButton="none" rightSearchButton="none" bg-color="#F5F5F5">
       </uni-search-bar>
+      <view class="search-bt" @click="gotoSearch()">搜索</view>
     </view>
 
     <view v-if="false" class="company">
@@ -21,7 +22,11 @@
     </view>
 
     <view class="order-scan">
-      <button>扫一扫关联订单</button>
+      <view class="scan-bt">扫一扫关联订单
+        <view class="scan-icon">
+          <uni-icons class="icon" type="scan" color="#5490F5" size="22"></uni-icons>
+        </view>
+      </view>
     </view>
 
     <view class="invite-view">
@@ -40,7 +45,10 @@
     </view>
 
     <view class="hot-view">
-      <view class="label">聚焦热点</view>
+      <view class="label">
+        <view>聚焦</view>
+        <view class="two">热点</view>
+      </view>
       <view class="list">
         <view class="one-lines-ellipsis text" v-for="(n, index) in news" :key="index">{{ n.content }}</view>
       </view>
@@ -52,7 +60,7 @@
     </view>
 
 
-    <view class="go-login" v-if="!userInfo">
+    <view class="go-login" v-if="!userInfo && false">
       <view>立即登录</view>
       <button type="primary" @click="goLogin"
         style="width: 54px;height: 50rpx;line-height: 50rpx;font-size: 24rpx;margin: 0;">登录</button>
@@ -88,10 +96,6 @@
           {
             id: 2,
             imageUrl: require('@/static/temp/2.png')
-          },
-          {
-            id: 3,
-            imageUrl: require('@/static/temp/3.png')
           }
         ],
         news: [{
@@ -123,6 +127,11 @@
       },
       changeTab(e) {
         this.currentTab = e.index
+      },
+      gotoSearch() {
+        uni.navigateTo({
+          url: `/pages/tabBar/homepage/search`
+        });
       }
     }
   };
@@ -140,7 +149,37 @@
   }
 
   .order-scan {
-    margin-bottom: 20rpx;
+    position: relative;
+    border: 4rpx solid $system-color;
+    border-radius: 40rpx;
+    text-align: center;
+    padding: 4rpx 0;
+
+    .scan-bt {
+      background: linear-gradient(to right, #FFFFFF, #87CEFA);
+      border-radius: 40rpx;
+      margin: 0 4rpx;
+      color: $system-color;
+      font-size: 32rpx;
+      line-height: 60rpx;
+      height: 60rpx;
+    }
+
+    .scan-icon {
+      position: absolute;
+      top: 2rpx;
+      bottom: 0;
+      right: 4rpx;
+      width: 60rpx;
+      height: 60rpx;
+      border-radius: 60rpx;
+      border: 2rpx solid #efefef;
+      background-color: #FFFFFF;
+
+      .icon {
+        color: $system-color;
+      }
+    }
   }
 
   .swiper {
@@ -176,10 +215,22 @@
     border-radius: 10rpx;
     box-shadow: 0 2px 12px 0 #e5e5e5;
     align-items: center;
+    z-index: 999;
   }
 
   .search-bar-container {
     text-align: center;
+    display: flex;
+
+    .search-input {
+      width: calc(100% - 80rpx) !important;
+    }
+
+    .search-bt {
+      width: 80rpx;
+      margin: 16rpx 0 0 10rpx;
+      font-size: 26rpx;
+    }
   }
 
   .invite-view {
@@ -187,6 +238,7 @@
     justify-content: center;
     justify-items: center;
     text-align: center;
+    margin-top: 40rpx;
 
     .left {
       flex: 1;
@@ -218,6 +270,10 @@
       width: 130rpx;
       font-size: 40rpx;
       font-weight: bold;
+
+      .two {
+        color: #F0A046;
+      }
     }
 
     .list {
