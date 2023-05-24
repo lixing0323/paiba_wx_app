@@ -1,12 +1,14 @@
 <template>
   <view class="login-container">
-    <view class="logo-container" style="padding-top: 100px">
-      <view class="logo-view">
-        <image class="logo" :src="logoSrc" :data-src="logoSrc" mode="widthFix"></image>
-        <view class="title">拍吧</view>
+    <tui-banner-arc height="520" percent="140" background="-webkit-linear-gradient(#5490F5,#ADD8E6)">
+      <view class="logo-container">
+        <view class="logo-view">
+          <image class="logo" :src="logoSrc" :data-src="logoSrc" mode="widthFix"></image>
+          <view class="title">拍吧</view>
+        </view>
+        <view class="note">让 我 们 一 起 成 长</view>
       </view>
-      <view class="note">让 我 们 一 起 成 长</view>
-    </view>
+    </tui-banner-arc>
     <view class="common-padding">
       <view class="login-form-container wx-login-view">
         <template v-if="isWxLogin">
@@ -17,13 +19,13 @@
         </template>
         <template v-else>
           <view>
-            <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="person" v-model="loginForm.username"
-              placeholder="请输入用户名" :inputBorder="false" class="input">
+            <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="phone" v-model="loginForm.username"
+              placeholder="请输入手机号" :inputBorder="false" :styles="inputStyle" class="input">
             </uni-easyinput>
           </view>
           <view style="margin-top: 15px;">
-            <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="locked" v-model="loginForm.password"
-              placeholder="请输入验证码" :inputBorder="false" class="input">
+            <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="chat-filled" v-model="loginForm.password"
+              placeholder="请输入验证码" :inputBorder="false" :styles="inputStyle" class="input">
               <template v-slot:right>
                 <view class="sms-code-bt">{{ code }}</view>
               </template>
@@ -43,8 +45,8 @@
           <view class="line" />
         </view>
         <view class="button" @click="switchLoginType()">
-          <image :src="managerLogo" class="switch-img" mode="widthFix" />
-          <text class="text">手机号登录</text>
+          <uni-icons class="switch-img" type="phone-filled" color="#5490F5" size="30"></uni-icons>
+          <view class="text">手机号登录</view>
         </view>
       </view>
     </view>
@@ -76,6 +78,15 @@
         messageText: undefined,
         code: '获取验证码'
       };
+    },
+    computed: {
+      inputStyle() {
+        return {
+          color: '#333',
+          backgroundColor: '#FAF8F7',
+          borderColor: '#e5e5e5'
+        }
+      }
     },
     onLoad(params) {
       this.getWxCode()
@@ -146,7 +157,6 @@
   .login-container {
     width: 100%;
     height: 100%;
-    background-color: #FFFFFF;
   }
 
   .input {
@@ -162,6 +172,7 @@
 
   .logo-container {
     width: 100%;
+    margin-top: 200rpx;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -239,14 +250,10 @@
       }
     }
 
-    .switch-img {
-      width: 80rpx;
-      height: 80rpx;
-      margin-top: 30rpx;
-    }
+    .switch-img {}
 
     .button {
-      margin-top: 20rpx;
+      margin-top: 50rpx;
 
       .text {
         display: block;
@@ -273,7 +280,7 @@
     }
 
     .wx-login-bt-disabled {
-      background-color: #C9BDA5 !important;
+      background-color: #7AB3F9 !important;
     }
   }
 
@@ -286,6 +293,7 @@
   .sms-code-bt {
     padding: 10rpx 20rpx;
     border-radius: 20rpx;
+    margin-right: 10rpx;
     border: 1px solid #333;
   }
 </style>

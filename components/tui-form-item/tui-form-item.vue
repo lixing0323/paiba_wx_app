@@ -36,7 +36,7 @@
     props: {
       padding: {
         type: String,
-        default: '26rpx 30rpx'
+        default: '26rpx 0'
       },
       marginTop: {
         type: [Number, String],
@@ -100,7 +100,7 @@
       },
       left: {
         type: [Number, String],
-        default: 30
+        default: 0
       },
       right: {
         type: [Number, String],

@@ -2,7 +2,8 @@
   <view>
     <view class="list-view">
       <uni-list>
-        <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="personalIcon" title="个人信息" />
+        <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="personalIcon" title="个人信息"
+          @click="gotoPersonalInfo" />
         <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="joinUsIcon" title="加入我们" />
         <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="applyIcon" title="成为商户/入驻申请" />
       </uni-list>
@@ -41,14 +42,15 @@
       ...mapGetters(['userInfo'])
     },
     created() {},
-    methods: {}
+    methods: {
+      gotoPersonalInfo() {
+        uni.navigateTo({
+          url: `/packageA/pages/mine/setting/personal-info/view`
+        });
+      }
+    }
   };
 </script>
 
 <style lang="scss" scoped>
-  @import '@/common/uni-nvue.css';
-
-  .list-view {
-    padding: 0 20rpx;
-  }
 </style>

@@ -125,7 +125,7 @@
             }
           }
         } else {
-          uni.navigateTo({
+          uni.reLaunch({
             url: `/packageA/pages/login/index`
           });
         }

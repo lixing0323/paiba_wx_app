@@ -1,4 +1,4 @@
-import MescrollMixin from "@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js";
+import MescrollMixin from 'mescroll-uni/mescroll-mixins.js';
 
 export default {
   mixins: [MescrollMixin],
@@ -42,8 +42,8 @@ export default {
       this.listQuery = {
           page: 1,
           perPage: 10
-      },
-      this.list = []
+        },
+        this.list = []
       this.search()
     },
     setObjectAfterList() {
@@ -117,7 +117,7 @@ export default {
       }
     },
     endList() {
-    	this.mescroll.endByPage(0, 0);
+      this.mescroll.endByPage(0, 0);
     },
     //点击空布局按钮的回调
     emptyClick() {}

@@ -2,7 +2,7 @@
   <view class="homepage-container">
     <view class="search-bar-container">
       <uni-search-bar class="search-input" v-model="listQuery.search" ref="searchBar" placeholder="搜索内容" border="none"
-        @input="search" @clear="clear" cancelButton="none" rightSearchButton="none" bg-color="#F5F5F5">
+        @input="search" @clear="clear" cancelButton="none" rightSearchButton="none" bg-color="#dedede">
       </uni-search-bar>
       <view class="search-bt" @click="gotoSearch()">搜索</view>
     </view>
@@ -54,9 +54,12 @@
       </view>
     </view>
 
+
     <view class="tab-view">
-      <tui-tabs :tabs="tabs" :currentTab="currentTab" @change="changeTab"></tui-tabs>
-      <news-card v-for="(item, index) in 5" :key="item" />
+      <uni-segmented-control :current="currentTab" :values="tabs" style-type="text" @clickItem="changeTab" />
+      <view class="card">
+        <news-card v-for="(item, index) in 5" :key="item" />
+      </view>
     </view>
 
 
@@ -109,24 +112,20 @@
           }
         ],
         customerInfo: undefined,
-        tabs: [{
-          name: '资讯'
-        }, {
-          name: '直播'
-        }],
+        tabs: ['资讯', '直播']
       };
     },
     created() {},
     methods: {
       goLogin() {
         if (!this.userInfo) {
-          uni.navigateTo({
+          uni.reLaunch({
             url: `/packageA/pages/login/index`
           });
         }
       },
       changeTab(e) {
-        this.currentTab = e.index
+        this.currentTab = e.currentIndex
       },
       gotoSearch() {
         uni.navigateTo({
@@ -220,6 +219,7 @@
 
   .search-bar-container {
     text-align: center;
+    align-items: center;
     display: flex;
 
     .search-input {
@@ -228,7 +228,7 @@
 
     .search-bt {
       width: 80rpx;
-      margin: 16rpx 0 0 10rpx;
+      margin: 0 0 0 10rpx;
       font-size: 26rpx;
     }
   }
@@ -267,7 +267,7 @@
     margin-top: 30rpx;
 
     .label {
-      width: 130rpx;
+      width: 116rpx;
       font-size: 40rpx;
       font-weight: bold;
 
@@ -288,5 +288,10 @@
 
   .tab-view {
     margin: 20rpx 0;
+
+    .card {
+      border-radius: 20rpx;
+      background-color: #FFFFFF;
+    }
   }
 </style>

@@ -115,8 +115,4 @@
 <style lang="scss" scoped>
   @import '@/common/uni-nvue.css';
   @import '@/common/business.scss';
-
-  .list-view {
-    padding: 0 20rpx;
-  }
 </style>

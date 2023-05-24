@@ -42,11 +42,12 @@
 
   .news-container {
     display: flex;
-    padding: 20rpx 0 0 0;
+    padding: 10rpx 0 10rpx 0;
 
     .left {
       display: flex;
       align-items: center;
+      margin-left: 10rpx;
 
       .icon {
         width: 160rpx;
@@ -58,7 +59,7 @@
     }
 
     .right {
-      width: calc(100% - 160rpx);
+      width: calc(100% - 180rpx);
       margin-left: 20rpx;
 
       .name {
@@ -66,7 +67,7 @@
       }
 
       .time {
-        margin-top: 10rpx;
+        margin-top: 18rpx;
         font-size: 16rpx;
         color: #999;
       }

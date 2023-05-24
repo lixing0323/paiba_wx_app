@@ -86,7 +86,7 @@
 	} */
 
   uni-page-body {
-    background-color: #FFFFFF !important;
+    background-color: #F0F3F6 !important;
     min-height: 100% !important;
     height: auto !important;
   }
@@ -103,7 +103,7 @@
 
   /* 以下样式用于 hello uni-app 演示所需 */
   page {
-    background-color: #FFFFFF;
+    background-color: #F0F3F6;
     height: 100%;
     font-size: 28rpx;
     /* line-height: 1.8; */

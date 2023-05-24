@@ -9,9 +9,9 @@
       }
     },
     {
-      "path": "pages/tabBar/service/index",
+      "path": "pages/tabBar/order/index",
       "style": {
-        "navigationBarTitleText": "订单",
+        "navigationBarTitleText": "工单",
         "navigationBarTextStyle": "black"
       }
     },
@@ -68,6 +68,12 @@
           "style": {
             "navigationBarTitleText": "我的设置"
           }
+        },
+        {
+          "path": "pages/mine/setting/personal-info/view",
+          "style": {
+            "navigationBarTitleText": "个人信息"
+          }
         }
       ]
     },
@@ -75,153 +81,21 @@
       "root": "packageB",
       "name": "packageB",
       "pages": [{
-          "path": "pages/customer/introduce/detail",
+          "path": "pages/staff/order/search",
           "style": {
-            "navigationBarTitleText": "介绍"
+            "navigationBarTitleText": "工单搜索"
           }
         },
         {
-          "path": "pages/customer/requirement/index",
+          "path": "pages/staff/order/detail",
           "style": {
-            "navigationBarTitleText": "我的需求"
+            "navigationBarTitleText": "工单详情"
           }
         },
         {
-          "path": "pages/customer/requirement/create",
+          "path": "pages/staff/order/expense",
           "style": {
-            "navigationBarTitleText": "新建需求"
-          }
-        },
-        {
-          "path": "pages/customer/report/index",
-          "style": {
-            "navigationBarTitleText": "个人报告"
-          }
-        },
-        {
-          "path": "pages/customer/report/business/index",
-          "style": {
-            "navigationBarTitleText": "经营分析"
-          }
-        },
-        {
-          "path": "pages/customer/report/financial/index",
-          "style": {
-            "navigationBarTitleText": "财务分析"
-          }
-        },
-        {
-          "path": "pages/customer/report/pawn/index",
-          "style": {
-            "navigationBarTitleText": "抵押物情况"
-          }
-        },
-        {
-          "path": "pages/customer/report/credit-report/my",
-          "style": {
-            "navigationBarTitleText": "个人征信分析"
-          }
-        },
-        {
-          "path": "pages/customer/report/credit-report/company",
-          "style": {
-            "navigationBarTitleText": "经营背景征信分析"
-          }
-        },
-        {
-          "path": "pages/customer/report/credit-guarantees/index",
-          "style": {
-            "navigationBarTitleText": "信用卡及担保信息"
-          }
-        },
-        {
-          "path": "pages/staff/customer-req/index",
-          "style": {
-            "navigationBarTitleText": "客户需求"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/index",
-          "style": {
-            "navigationBarTitleText": "我的客户"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/detail",
-          "style": {
-            "navigationBarTitleText": "客户详情"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/customer-info-upload/index",
-          "style": {
-            "navigationBarTitleText": "客户资料"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/customer-info/index",
-          "style": {
-            "navigationBarTitleText": "客户个人信息"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/business/index",
-          "style": {
-            "navigationBarTitleText": "客户关联公司"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/business/edit",
-          "style": {
-            "navigationBarTitleText": "编辑关联公司"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/business/create",
-          "style": {
-            "navigationBarTitleText": "新建关联公司"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/deposit/index",
-          "style": {
-            "navigationBarTitleText": "客户存款"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/immovable/index",
-          "style": {
-            "navigationBarTitleText": "客户不动产"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/movable/index",
-          "style": {
-            "navigationBarTitleText": "客户动产"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/loan/index",
-          "style": {
-            "navigationBarTitleText": "客户贷款"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/credit-card/index",
-          "style": {
-            "navigationBarTitleText": "客户信用卡"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/guarantee/index",
-          "style": {
-            "navigationBarTitleText": "客户对外担保"
-          }
-        },
-        {
-          "path": "pages/staff/my-customer/components/service/index",
-          "style": {
-            "navigationBarTitleText": "客户已购服务"
+            "navigationBarTitleText": "费用报销"
           }
         }
       ]
@@ -270,6 +144,7 @@
       "tui-time-axis": "@/components/tui-time-axis/tui-time-axis.vue",
       "tui-form-item": "@/components/tui-form-item/tui-form-item.vue",
       "tui-textarea": "@/components/tui-textarea/tui-textarea.vue",
+      "tui-banner-arc": "@/components/tui-banner-arc/tui-banner-arc.vue",
       "tui-(.*)": "thorui-uni/lib/thorui/tui-$1/tui-$1.vue"
     }
   },
@@ -277,7 +152,7 @@
     "pageOrientation": "portrait",
     "navigationBarTitleText": "uniapp",
     "navigationBarTextStyle": "black",
-    "navigationBarBackgroundColor": "#FFFFFF"
+    "navigationBarBackgroundColor": "#F0F3F6"
   },
   "tabBar": {
     "color": "#7A7E83",
@@ -291,10 +166,10 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/tabBar/service/index",
+        "pagePath": "pages/tabBar/order/index",
         "iconPath": "static/nav/service_1.png",
         "selectedIconPath": "static/nav/service_2.png",
-        "text": "订单"
+        "text": "工单"
       },
       {
         "pagePath": "pages/tabBar/mine/index",

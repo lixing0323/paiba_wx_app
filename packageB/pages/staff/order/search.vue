@@ -3,7 +3,7 @@
     <view class="search-box">
       <view class="search-input">
         <uni-icons type="search" :size="18" color="#333"></uni-icons>
-        <input confirm-type="search" placeholder="请输入需要搜索的内容" :focus="true" auto-focus
+        <input confirm-type="search" placeholder="请输入订单名称" :focus="true" auto-focus
           placeholder-class="search-input-plholder" class="search-input-component" v-model.trim="key" @input="inputKey"
           @confirm="doSearch" />
         <uni-icons type="clear" :size="13" color="#bcbcbc" @tap="onClearKey()" v-show="key"></uni-icons>

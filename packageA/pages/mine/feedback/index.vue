@@ -2,22 +2,19 @@
   <view>
     <view class="create-feedback-container business-content-padding-top-20">
       <view class="tui-form-container">
-        <tui-form-item asterisk direction="column" label="意见或建议" padding="26rpx 0" :left="0" content-margin-top="8px">
+        <tui-form-item asterisk direction="column" label="意见或建议" content-margin-top="8px">
           <tui-textarea isCounter autoHeight v-model="form.content" textarea-border maxlength="200"
             placeholder="您的意见和建议对我们来说很重要" />
         </tui-form-item>
-        <tui-form-item direction="column" label="上传图片（选填，最多3张）" padding="26rpx 0" :left="0" content-margin-top="8px">
+        <tui-form-item direction="column" label="上传图片（选填，最多3张）" content-margin-top="8px">
           <template>
-            <view style="height: 100%;">
-              <view class="input-view">
-                <ht-upload-files style="width: 100%;" ref="images" :cosKey="'feedback'" :limit="3"
-                  @selection-change="onChangeImages" />
-              </view>
+            <view class="input-view">
+              <ht-upload-files style="width: 100%;" ref="images" :cosKey="'feedback'" :limit="3"
+                @selection-change="onChangeImages" />
             </view>
           </template>
         </tui-form-item>
-        <tui-form-item direction="column" label="评价" padding="26rpx 0" :left="0" content-margin-top="8px"
-          :bottom-border="false">
+        <tui-form-item direction="column" label="评价" content-margin-top="8px" :bottom-border="false">
           <template>
             <ht-card>
               <view class="rate-view">
@@ -50,10 +47,8 @@
   import {
     postFeedback
   } from '@/apis/feedback.js';
-  import WxMessageMixin from '@/mixins/wxMessageMixin.js';
 
   export default {
-    mixins: [WxMessageMixin],
     data() {
       return {
         form: {
@@ -114,7 +109,7 @@
 
     .left {
       text-align: right;
-      flex: 2;
+      flex: 1;
 
       .label {
         line-height: 50rpx;
@@ -123,7 +118,8 @@
     }
 
     .right {
-      flex: 3;
+      flex: 4;
+      text-align: left;
       margin-left: 20rpx;
     }
   }
