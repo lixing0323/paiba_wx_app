@@ -97,6 +97,30 @@
           "style": {
             "navigationBarTitleText": "费用报销"
           }
+        },
+        {
+          "path": "pages/invite/invite-me",
+          "style": {
+            "navigationBarTitleText": "邀请我的"
+          }
+        },
+        {
+          "path": "pages/invite/my-invitation",
+          "style": {
+            "navigationBarTitleText": "我邀请的"
+          }
+        },
+        {
+          "path": "pages/invite/search",
+          "style": {
+            "navigationBarTitleText": "搜索"
+          }
+        },
+        {
+          "path": "pages/invite/detail",
+          "style": {
+            "navigationBarTitleText": "邀请详情"
+          }
         }
       ]
     },

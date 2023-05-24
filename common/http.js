@@ -3,16 +3,18 @@ import {
   getTokenStorage
 } from '@/store/localStorage.js'
 import store from '@/store/index.js'
+import {
+  VUE_APP_BASE_API
+} from '@/common/const.js'
 
 const http = new Request()
 
 // attach token
 http.setConfig(config => {
-  config.baseURL = process.env.VUE_APP_API_BASE_URL
+  config.baseURL = VUE_APP_BASE_API
   config.header = {
     ...config.header,
-    token: getTokenStorage(),
-    wxaVersion: process.env.VUE_APP_WX_VERSION
+    token: getTokenStorage()
   }
   return config
 })

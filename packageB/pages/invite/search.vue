@@ -2,13 +2,13 @@
   <view class="business-search-container">
     <view class="search-box">
       <view class="search-input">
-        <icon type="search" :size="18" color="#333"></icon>
-        <input confirm-type="search" placeholder="请输入服务名称" :focus="true" auto-focus
+        <uni-icons type="search" :size="18" color="#333"></uni-icons>
+        <input confirm-type="search" placeholder="请输入需要搜索的内容" :focus="true" auto-focus
           placeholder-class="search-input-plholder" class="search-input-component" v-model.trim="key" @input="inputKey"
           @confirm="doSearch" />
-        <icon type="clear" :size="13" color="#bcbcbc" @tap="onClearKey()" v-show="key"></icon>
+        <uni-icons type="clear" :size="13" color="#bcbcbc" @tap="onClearKey()" v-show="key"></uni-icons>
       </view>
-      <view class="search-cancle" @tap="goBack()">取消</view>
+      <view class="search-cancle" @tap="doSearch()">搜索</view>
     </view>
 
     <view class="search-history" v-show="history.length > 0 && !key">
@@ -93,10 +93,7 @@
         isLoading: false
       };
     },
-    onLoad() {
-      this.getHistoryList()
-      this.getHotList()
-    },
+    onLoad() {},
     created() {},
     methods: {
       getHistoryList() {

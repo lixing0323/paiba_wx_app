@@ -9,7 +9,7 @@
     mapGetters
   } from 'vuex';
   import customerHomepage from './customer.vue';
-  import staffHomepage from './staff.vue';
+  import staffHomepage from './customer.vue';
   import {
     isCustomer,
     isStaff,

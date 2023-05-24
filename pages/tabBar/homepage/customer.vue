@@ -30,11 +30,11 @@
     </view>
 
     <view class="invite-view">
-      <view class="left">
+      <view class="left" @click="gotoInviteMe()">
         <image :src="inviteImgSrc" class="image" mode="aspectFill" />
         <view class="name">邀请我的</view>
       </view>
-      <view class="right">
+      <view class="right" @click="gotoMyInvitation()">
         <image :src="inviteImgSrc" class="image" mode="aspectFill" />
         <view class="name">我邀请的</view>
       </view>
@@ -131,6 +131,16 @@
         uni.navigateTo({
           url: `/pages/tabBar/homepage/search`
         });
+      },
+      gotoInviteMe() {
+        uni.navigateTo({
+          url: `/packageB/pages/invite/invite-me`
+        })
+      },
+      gotoMyInvitation() {
+        uni.navigateTo({
+          url: `/packageB/pages/invite/myInvitation`
+        })
       }
     }
   };

@@ -1,6 +1,10 @@
 import {
   getCOSAuthorization
 } from '@/apis/cos.js'
+import {
+  VUE_APP_COS_BUCKET,
+  VUE_APP_COS_REGION
+} from '@/common/const.js'
 
 var COS = require('@/js_modules/wx-cos/cos-wx-sdk-v5.js');
 
@@ -9,7 +13,6 @@ export const COS_IMAGE_PREFIX = '?imageView2'
 
 // 存储桶Region可以在COS控制台指定存储桶的概览页查看 https://console.cloud.tencent.com/cos5/bucket/
 // 关于地域的详情见 https://cloud.tencent.com/document/product/436/6224
-var VUE_APP_COS_REGION = 'ap-shanghai';
 
 var getAuthorization = function(options, callback) {
   getCOSAuthorization().then(response => {
@@ -41,7 +44,7 @@ var cos = new COS({
 export function sliceUploadFileOnCOS(files, onUploadProgress = null, onUploadFinish = null) {
   const fileList = files.map(function(file) {
     return Object.assign(file, {
-      Bucket: process.env.VUE_APP_COS_BUCKET,
+      Bucket: VUE_APP_COS_BUCKET,
       Region: VUE_APP_COS_REGION,
       Key: file.name,
       FilePath: file.path,
@@ -79,7 +82,7 @@ export function sliceUploadFileOnCOS(files, onUploadProgress = null, onUploadFin
 // 删除文件
 export function deleteFileOnCOS(filePath) {
   cos.deleteObject({
-    Bucket: process.env.VUE_APP_COS_BUCKET,
+    Bucket: VUE_APP_COS_BUCKET,
     Region: VUE_APP_COS_REGION,
     Key: filePath
   }, function(err, data) {
