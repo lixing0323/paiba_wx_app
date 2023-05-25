@@ -1,5 +1,9 @@
 <template>
   <view>
+    <view class="avatar">
+      <image class="image" :src="require('@/static/img/user-profile.png')" />
+    </view>
+
     <view class="tui-form-container">
       <tui-form-item label="创建人">
         <template v-slot:right>
@@ -11,6 +15,9 @@
           13212345678
         </template>
       </tui-form-item>
+    </view>
+
+    <view class="tui-form-container" style="margin-top: 20rpx;">
       <tui-form-item label="被邀请人">
         <template v-slot:right>
           <uni-tag class="role" circle size="mini" text="灯光师" type="primary" /> 李四
@@ -21,14 +28,24 @@
           灯光组
         </template>
       </tui-form-item>
-      <tui-form-item label="联系电话">
+      <tui-form-item label="日薪资">
         <template v-slot:right>
-          13087654321
+          ¥1222
         </template>
       </tui-form-item>
       <tui-form-item label="工作时间">
         <template v-slot:right>
-          2023年5月24日 17:37
+          2023年5月24日 17:37 - 2023年5月26日 17:37
+        </template>
+      </tui-form-item>
+      <tui-form-item label="总薪资">
+        <template v-slot:right>
+          ¥21212
+        </template>
+      </tui-form-item>
+      <tui-form-item label="联系电话">
+        <template v-slot:right>
+          13087654321
         </template>
       </tui-form-item>
       <tui-form-item label="集合地点">
@@ -82,6 +99,16 @@
   .tui-form-container {
     .role {
       margin-right: 40rpx;
+    }
+  }
+
+  .avatar {
+    text-align: center;
+
+    .image {
+      width: 160rpx;
+      height: 160rpx;
+      border-radius: 160rpx;
     }
   }
 

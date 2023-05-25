@@ -74,6 +74,18 @@
           "style": {
             "navigationBarTitleText": "个人信息"
           }
+        },
+        {
+          "path": "pages/mine/setting/join-us/index",
+          "style": {
+            "navigationBarTitleText": "加入我们"
+          }
+        },
+        {
+          "path": "pages/mine/setting/settled-in/index",
+          "style": {
+            "navigationBarTitleText": "入驻申请"
+          }
         }
       ]
     },
@@ -169,6 +181,7 @@
       "tui-form-item": "@/components/tui-form-item/tui-form-item.vue",
       "tui-textarea": "@/components/tui-textarea/tui-textarea.vue",
       "tui-banner-arc": "@/components/tui-banner-arc/tui-banner-arc.vue",
+      "tui-code-input": "@/components/tui-code-input/tui-code-input.vue",
       "tui-(.*)": "thorui-uni/lib/thorui/tui-$1/tui-$1.vue"
     }
   },

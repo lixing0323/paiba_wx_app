@@ -1,6 +1,6 @@
 <template>
   <view class="login-container">
-    <tui-banner-arc height="520" percent="140" background="-webkit-linear-gradient(#5490F5,#ADD8E6)">
+    <tui-banner-arc height="500" percent="140" background="-webkit-linear-gradient(#5490F5,#ADD8E6)">
       <view class="logo-container">
         <view class="logo-view">
           <image class="logo" :src="logoSrc" :data-src="logoSrc" mode="widthFix"></image>
@@ -27,7 +27,9 @@
             <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="chat-filled" v-model="loginForm.password"
               placeholder="请输入验证码" :inputBorder="false" :styles="inputStyle" class="input">
               <template v-slot:right>
-                <view class="sms-code-bt">{{ code }}</view>
+                <view :class="{'disable-code-bt': countdownTimer}" class="sms-code-bt" @click="sendCode()">
+                  {{ countDownButton }}
+                </view>
               </template>
             </uni-easyinput>
           </view>
@@ -45,8 +47,14 @@
           <view class="line" />
         </view>
         <view class="button" @click="switchLoginType()">
-          <uni-icons class="switch-img" type="phone-filled" color="#5490F5" size="30"></uni-icons>
-          <view class="text">手机号登录</view>
+          <template v-if="isWxLogin">
+            <uni-icons class="switch-img" type="phone-filled" color="#5490F5" size="30"></uni-icons>
+            <view class="text">手机号登录</view>
+          </template>
+          <template v-else>
+            <uni-icons class="switch-img" type="weixin" color="#58BE6B" size="30"></uni-icons>
+            <view class="text" style="color: #58BE6B;">微信一键登录</view>
+          </template>
         </view>
       </view>
     </view>
@@ -76,7 +84,9 @@
         },
         msgType: 'success',
         messageText: undefined,
-        code: '获取验证码'
+        countDownButton: '获取验证码',
+        countdownTimer: null,
+        countdownText: 's后获取'
       };
     },
     computed: {
@@ -91,9 +101,36 @@
     onLoad(params) {
       this.getWxCode()
     },
+    beforeDestroy() {
+      this.clearTimer();
+    },
     onShow() {},
     created() {},
     methods: {
+      //重置发送组件
+      resetCountDown() {
+        this.clearTimer()
+        this.countDownButton = '获取验证码'
+      },
+      clearTimer() {
+        clearInterval(this.countdownTimer)
+        this.countdownTimer = null
+      },
+      sendCode() {
+        if (!this.countdownTimer) {
+          // 倒计时时间 120s
+          let seconds = 120
+          this.countDownButton = seconds + this.countdownText;
+          this.countdownTimer = setInterval(() => {
+            if (seconds > 1) {
+              --seconds
+              this.countDownButton = seconds + this.countdownText;
+            } else {
+              this.resetCountDown()
+            }
+          }, 1000);
+        }
+      },
       getWxCode(type) {
         // uni.showLoading({
         //   mask: true
@@ -111,7 +148,6 @@
       },
       switchLoginType() {
         this.isWxLogin = !this.isWxLogin
-        this.boxChecked = false
       },
       onPasswordLogin() {
 
@@ -267,7 +303,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 200px;
+    bottom: 25%;
     margin: 0 auto;
 
     .wx-login-bt {
@@ -295,5 +331,11 @@
     border-radius: 20rpx;
     margin-right: 10rpx;
     border: 1px solid #333;
+  }
+
+  .disable-code-bt {
+    color: #ffffff !important;
+    background-color: #bbb !important;
+    border: 0
   }
 </style>

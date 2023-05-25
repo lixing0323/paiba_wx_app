@@ -4,10 +4,9 @@
       <view class="tab">
         <uni-segmented-control :current="currentTab" :values="tabs" style-type="text" @clickItem="changeTab" />
       </view>
-      <uni-search-bar class="search-input" v-model="listQuery.search" ref="searchBar" placeholder=" " border="none"
-        @input="search" @clear="clear" @focus="gotoSearch()" cancelButton="none" rightSearchButton="none"
-        bg-color="#dedede">
-      </uni-search-bar>
+      <view class="search-icon" @click="gotoSearch()">
+        <uni-icons class="image" type="search" size="22" color="#333"></uni-icons>
+      </view>
     </view>
 
     <view>
@@ -91,8 +90,18 @@
     display: flex;
     justify-content: space-between;
 
-    .search-input {
-      width: 100rpx !important;
+    .search-icon {
+      width: 60rpx;
+      height: 60rpx;
+      border-radius: 50%;
+      background-color: #dedede;
+      display: flex;
+      justify-content: center;
+      justify-items: center;
+    }
+
+    .image {
+      margin-top: 6rpx;
     }
 
     .tab {
