@@ -12,7 +12,9 @@
       </view>
       <view class="right-content">
         <view class="tui-form__item-right">
-          <view v-if="rightContent" :style="{'color': rightContentColor}"> {{ rightContent }}</view>
+          <view v-if="rightContent" :style="{'color': rightContentColor}" @click="clickRightContent()">
+            {{ rightContent }}
+          </view>
           <slot v-else name="right"></slot>
         </view>
         <view v-if="bottomBorder" :style="{background:borderColor,left:left+'rpx',right:right+'rpx'}"
@@ -132,6 +134,9 @@
         this.$emit('click', {
           index: this.index
         });
+      },
+      clickRightContent() {
+        this.$emit('click-right')
       }
     }
   }
@@ -223,7 +228,7 @@
   }
 
   .left-content {
-    min-width: 130px;
+    min-width: 100px;
   }
 
   .right-content {

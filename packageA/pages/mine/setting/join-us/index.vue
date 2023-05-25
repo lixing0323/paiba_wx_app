@@ -7,7 +7,7 @@
 
     <view class="note">请输入公司密钥，后台通过审核后加入我们</view>
 
-    <view class="business-submit-button">
+    <view class="submit-bt-view">
       <button type="primary" @click="submit()" :disabled="loading">申请加入</button>
     </view>
   </view>
@@ -50,9 +50,5 @@
     font-size: 30rpx;
     text-align: center;
     margin-top: 40rpx;
-  }
-
-  .business-submit-button {
-    margin-top: 60rpx !important;
   }
 </style>

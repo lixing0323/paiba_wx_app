@@ -10,7 +10,7 @@
       </tui-form-item>
     </view>
 
-    <view class="business-submit-button">
+    <view class="submit-bt-view">
       <button type="primary" @click="submit()" :disabled="loading">申请加入</button>
     </view>
   </view>
@@ -21,6 +21,7 @@
     props: {},
     data() {
       return {
+        loading: false,
         form: {
           files: []
         }

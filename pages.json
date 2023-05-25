@@ -72,7 +72,13 @@
         {
           "path": "pages/mine/setting/personal-info/view",
           "style": {
-            "navigationBarTitleText": "个人信息"
+            "navigationBarTitleText": "个人信息详情"
+          }
+        },
+        {
+          "path": "pages/mine/setting/personal-info/edit",
+          "style": {
+            "navigationBarTitleText": "修改个人信息"
           }
         },
         {
@@ -85,6 +91,78 @@
           "path": "pages/mine/setting/settled-in/index",
           "style": {
             "navigationBarTitleText": "入驻申请"
+          }
+        },
+        {
+          "path": "pages/mine/edit/emergency-contact",
+          "style": {
+            "navigationBarTitleText": "编辑紧急联系人"
+          }
+        },
+        {
+          "path": "pages/mine/edit/mail-address",
+          "style": {
+            "navigationBarTitleText": "编辑通讯地址"
+          }
+        },
+        {
+          "path": "pages/mine/edit/education-experience",
+          "style": {
+            "navigationBarTitleText": "编辑教育经历"
+          }
+        },
+        {
+          "path": "pages/mine/edit/school",
+          "style": {
+            "navigationBarTitleText": "编辑学校"
+          }
+        },
+        {
+          "path": "pages/mine/edit/speciality",
+          "style": {
+            "navigationBarTitleText": "编辑专业"
+          }
+        },
+        {
+          "path": "pages/mine/edit/work-experience",
+          "style": {
+            "navigationBarTitleText": "编辑工作经历"
+          }
+        },
+        {
+          "path": "pages/mine/edit/company",
+          "style": {
+            "navigationBarTitleText": "编辑公司名称"
+          }
+        },
+        {
+          "path": "pages/mine/edit/industry",
+          "style": {
+            "navigationBarTitleText": "编辑所属行业"
+          }
+        },
+        {
+          "path": "pages/mine/edit/job",
+          "style": {
+            "navigationBarTitleText": "编辑职位名称"
+          }
+        },
+        {
+          "path": "pages/mine/edit/my-works",
+          "style": {
+            "navigationBarTitleText": "编辑我的作品"
+          }
+        },
+        {
+          "path": "pages/mine/edit/my-achievement",
+          "style": {
+            "navigationBarTitleText": "编辑我的成就"
+          }
+        },
+        {
+          "path": "pages/mine/edit/self-evaluation",
+          "style": {
+            "navigationBarTitleText": "编辑自我评价"
           }
         }
       ]
@@ -140,36 +218,11 @@
       "root": "packageC",
       "name": "packageC",
       "pages": [{
-          "path": "pages/search/product",
-          "style": {
-            "navigationBarTitleText": "产品搜索"
-          }
-        },
-        {
-          "path": "pages/search/service",
-          "style": {
-            "navigationBarTitleText": "服务搜索"
-          }
-        },
-        {
-          "path": "pages/poster/index",
-          "style": {
-            "navigationBarTitleText": "个人海报"
-          }
-        },
-        {
-          "path": "pages/order/index",
-          "style": {
-            "navigationBarTitleText": "订单"
-          }
-        },
-        {
-          "path": "pages/order/detail",
-          "style": {
-            "navigationBarTitleText": "订单详情"
-          }
+        "path": "pages/search/product",
+        "style": {
+          "navigationBarTitleText": "产品搜索"
         }
-      ]
+      }]
     }
   ],
   "easycom": {
@@ -182,6 +235,9 @@
       "tui-textarea": "@/components/tui-textarea/tui-textarea.vue",
       "tui-banner-arc": "@/components/tui-banner-arc/tui-banner-arc.vue",
       "tui-code-input": "@/components/tui-code-input/tui-code-input.vue",
+      "tui-picker": "@/components/tui-picker/tui-picker.vue",
+      "tui-input": "@/components/tui-input/tui-input.vue",
+      "tui-dialog": "@/components/tui-dialog/tui-dialog.vue",
       "tui-(.*)": "thorui-uni/lib/thorui/tui-$1/tui-$1.vue"
     }
   },

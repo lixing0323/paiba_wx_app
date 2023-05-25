@@ -61,7 +61,7 @@
       </tui-form-item>
     </view>
 
-    <view class="submit-button"><button type="primary" @click="submit()" :disabled="loading">确定</button></view>
+    <view class="submit-bt-view"><button type="primary" @click="submit()" :disabled="loading">确定</button></view>
 
     <uni-popup ref="message" type="message">
       <uni-popup-message type="success" :message="messageText" :duration="1500" />
@@ -110,11 +110,5 @@
       height: 160rpx;
       border-radius: 160rpx;
     }
-  }
-
-  .submit-button {
-    position: relative;
-    height: 100rpx;
-    margin: 40rpx;
   }
 </style>

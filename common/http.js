@@ -7,6 +7,16 @@ import {
   VUE_APP_BASE_API
 } from '@/common/const.js'
 
+function showErrMsg(mgs) {
+  setTimeout(() => {
+    uni.showToast({
+      title: mgs,
+      icon: 'none',
+      duration: 3000
+    })
+  }, 2000)
+}
+
 const http = new Request()
 
 // attach token
@@ -65,29 +75,17 @@ http.interceptors.response.use(async (response) => {
       });
       return Promise.reject(res.errMsg)
     } else if (res.errCode === 405 || res.errCode === 400000 || res.errCode === 404 || res.errCode === 400) {
-      uni.showToast({
-        title: res.errMsg,
-        icon: 'none',
-        duration: 3000
-      })
+      showErrMsg(res.errMsg)
       return Promise.reject(res.errMsg)
     } else if (res.errCode === 500) {
-      const message = '服务器错误！'
-      uni.showToast({
-        title: message,
-        icon: 'none'
-      })
+      showErrMsg('服务器错误！')
       return Promise.reject(message)
     } else {
       return res.data
     }
   }
 }, (response) => { // 请求错误做点什么
-  const message = '服务器连接失败！'
-  uni.showToast({
-    title: message,
-    icon: 'none'
-  })
+  showErrMsg('服务器连接失败！')
   return Promise.reject(message)
 })
 
