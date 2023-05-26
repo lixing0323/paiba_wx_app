@@ -19,21 +19,21 @@
 
       <tui-form-item asterisk label="专业">
         <template v-slot:right>
-          <view class="click-view" @click="showPicker=true">
-            <text class="content">{{ form.region }}</text> >
+          <view class="click-view" @click="gotoSpeciality()">
+            <text class="content">{{ form.speciality }}</text> >
           </view>
         </template>
       </tui-form-item>
 
       <tui-form-item asterisk label="时间段">
         <template v-slot:right>
-          <uni-datetime-picker :border="false" :clear-icon="false" v-model="form.date" type="daterange"
-            rangeSeparator="至" />
+          <picker-date-input :start="startDate" :end="endDate" @click-start="showStartDate=true"
+            @click-end="showEndDate=true" />
         </template>
       </tui-form-item>
 
       <tui-form-item asterisk direction="column" label="在校经历" content-margin-top="8px">
-        <tui-textarea isCounter autoHeight v-model="form.address" textarea-border maxlength="200"
+        <tui-textarea isCounter height="400rpx" v-model="form.experience" textarea-border maxlength="500"
           placeholder="填写在校经历" />
       </tui-form-item>
     </view>
@@ -42,9 +42,10 @@
       <button type="primary" @click="submit()" :disabled="loading">保存</button>
     </view>
 
-    <tui-picker :value="pickerValue" :show="showPicker" :layer="3" :pickerData="items__3" :params="2"
-      @hide="showPicker=false" @change="changePicker">
-    </tui-picker>
+    <picker-date-selctor :value="startDate" :visible.sync="showStartDate" @change="onChangeStart" />
+    <picker-date-selctor :value="endDate" :visible.sync="showEndDate" @change="onChangeEnd" />
+
+    <picker-education :visible="showPicker" :value="pickerValue" @close="showPicker=false" @change="onChangePicker" />
 
     <uni-popup ref="message" type="message">
       <uni-popup-message type="error" :message="messageText" :duration="1500" />
@@ -54,6 +55,10 @@
 
 <script>
   import FormMixin from '@/mixins/formMixin.js'
+  import PickerEducation from '@/packageA/pages/components/picker-education/index.vue'
+  import PickerDateInput from '@/packageA/pages/components/picker-date/index.vue'
+  import PickerDateSelctor from '@/packageA/pages/components/picker-date/selector.vue'
+
   import {
     getEducationExperience,
     saveEducationExperience
@@ -65,88 +70,87 @@
 
   export default {
     mixins: [FormMixin],
-    components: {},
+    components: {
+      PickerEducation,
+      PickerDateInput,
+      PickerDateSelctor
+    },
     data() {
       return {
         id: undefined,
         showPicker: false,
-        pickerValue: [],
+        pickerValue: undefined,
+        startDate: [],
+        endDate: [],
+        showStartDate: false,
+        showEndDate: false,
         form: {
           school: '',
-          date: '',
+          date: [],
           speciality: '',
           education: '',
           experience: ''
-        },
-        items__3: [{
-          text: '广东省',
-          value: '100',
-          children: [{
-            text: '广州市',
-            value: '10001',
-            children: [{
-              text: '天河区',
-              value: '1000101'
-            }, {
-              text: '黄埔区',
-              value: '1000102'
-            }, {
-              text: '从化区',
-              value: '1000103'
-            }]
-          }, {
-            text: '深圳市',
-            value: '10002',
-            children: [{
-              text: '福田区',
-              value: '1000201'
-            }, {
-              text: '南山区',
-              value: '1000202'
-            }]
-          }]
-        }, {
-          text: '安徽省',
-          value: '200',
-          children: [{
-            text: '合肥市',
-            value: '20001',
-            children: [{
-              text: '包河区',
-              value: '2000101'
-            }, {
-              text: '滨湖区',
-              value: '2000102'
-            }]
-          }, {
-            text: '安庆市',
-            value: '20002',
-            children: [{
-              text: '桐城市',
-              value: '2000201'
-            }, {
-              text: '怀宁县',
-              value: '2000202'
-            }]
-          }]
-        }]
-      };
+        }
+      }
     },
     computed: {},
     onShow() {
       this.getItemData()
     },
+    onLoad() {},
     methods: {
-      getItemData() {
-        this.form = Object.assign({}, getEducationExperience())
-      },
-      gotoSchool() {
-        uni.navigateTo({
-          url: `/packageA/pages/mine/edit/school`
+      // 保存
+      save() {
+        return new Promise((resolve, reject) => {
+          saveEducationExperience(this.form)
+          resolve()
         })
       },
-      changePicker(e) {
-        this.form.region = e.text.join('/')
+      getItemData() {
+        const info = getEducationExperience()
+        Object.keys(this.form).map(key => {
+          this.form[key] = info[key]
+        })
+        if (this.form.date && this.form.date.length === 2) {
+          this.startDate = this.form.date[0]
+          this.endDate = this.form.date[1]
+        }
+        if (this.form.education) {
+          this.pickerValue = this.form.education.split("/")
+        }
+      },
+      gotoSchool() {
+        this.save().then(() => {
+          uni.navigateTo({
+            url: `/packageA/pages/mine/edit/school`
+          })
+        })
+      },
+      gotoSpeciality() {
+        this.save().then(() => {
+          uni.navigateTo({
+            url: `/packageA/pages/mine/edit/speciality`
+          })
+        })
+      },
+      onChangePicker(value) {
+        this.form.education = value.join('/')
+      },
+      onChangeStart(value) {
+        this.startDate = value
+        const end = this.endDate ? this.endDate : []
+        this.form.date = [value, end]
+      },
+      onChangeEnd(value) {
+        this.endDate = value
+        const start = this.startDate ? this.startDate : []
+        this.form.date = [start, value]
+      },
+      checkEducationDate() {
+        if (this.form.date && this.form.date.length === 2) {
+          return this.form.date[0].length === 2 && this.form.date[1].length === 2
+        }
+        return false
       },
       checkValidate() {
         this.messageText = undefined
@@ -157,7 +161,7 @@
           this.messageText = '请选择学历'
         } else if (!this.form.speciality) {
           this.messageText = '请选择专业'
-        } else if (!this.form.date) {
+        } else if (!this.checkEducationDate()) {
           this.messageText = '请选择时间段'
         } else if (!this.form.experience) {
           this.messageText = '请填写在校经历'
@@ -171,8 +175,9 @@
       },
       submit() {
         if (this.checkValidate()) {
-          saveEducationExperience(this.form)
-          uni.navigateBack()
+          this.save().then(() => {
+            uni.navigateBack()
+          })
         }
       }
     }
@@ -189,12 +194,5 @@
     .content {
       margin-right: 20rpx;
     }
-  }
-
-  .input-view-value {
-    text-align: right;
-    font-size: $normal-font-size;
-    color: black;
-    vertical-align: middle;
   }
 </style>

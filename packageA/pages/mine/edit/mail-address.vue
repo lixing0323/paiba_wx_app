@@ -128,7 +128,10 @@
     },
     methods: {
       getItemData() {
-        this.form = Object.assign({}, getMailAddress())
+        const info = getMailAddress()
+        Object.keys(this.form).map(key => {
+          this.form[key] = info[key]
+        })
       },
       changePicker(e) {
         this.form.region = e.text.join('/')

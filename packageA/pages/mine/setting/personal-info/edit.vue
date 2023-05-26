@@ -11,7 +11,7 @@
         </tui-form-item>
         <tui-form-item asterisk label="昵称">
           <template v-slot:right>
-            <input :value="form.nickname" :disabled="true" class="input-view-value" placeholder="请填写"
+            <input :value="form.nickname" class="input-view-value" placeholder="请填写"
               @input="form.nickname = $event.detail.value" />
           </template>
         </tui-form-item>
@@ -27,19 +27,19 @@
         </tui-form-item>
         <tui-form-item asterisk label="姓名">
           <template v-slot:right>
-            <input :value="form.fullName" :disabled="true" class="input-view-value" placeholder="请填写"
+            <input :value="form.fullName" class="input-view-value" placeholder="请填写"
               @input="form.fullName = $event.detail.value" />
           </template>
         </tui-form-item>
         <tui-form-item asterisk label="手机号">
           <template v-slot:right>
-            <input :value="form.mobile" class="input-view-value" placeholder="请填写"
-              @input="form.mobile = $event.detail.value" />
+            <input :value="form.phone" :maxlength="11" class="input-view-value" placeholder="请填写"
+              @input="form.phone = $event.detail.value" />
           </template>
         </tui-form-item>
         <tui-form-item asterisk label="身份证号">
           <template v-slot:right>
-            <input :value="form.idCard" class="input-view-value" placeholder="请填写"
+            <input :value="form.idCard" :maxlength="18" class="input-view-value" placeholder="请填写"
               @input="form.idCard = $event.detail.value" />
           </template>
         </tui-form-item>
@@ -63,8 +63,8 @@
 
         <tui-form-item asterisk label="邮箱">
           <template v-slot:right>
-            <input :value="form.idCard" class="input-view-value" placeholder="请填写"
-              @input="form.idCard = $event.detail.value" />
+            <input :value="form.email" class="input-view-value" placeholder="请填写"
+              @input="form.email = $event.detail.value" />
           </template>
         </tui-form-item>
 
@@ -95,18 +95,17 @@
 
         <tui-form-item direction="column" label="教育经历" rightContent=">" content-margin-top="8px"
           @click-right="gotoEducationExperience()">
-          <tui-textarea isCounter autoHeight v-model="form.content" textarea-border maxlength="500"
-            placeholder="教育经历" />
+          <education-view-card :info="form" :show-more="false" />
         </tui-form-item>
 
-        <tui-form-item direction="column" label="工作经历" content-margin-top="8px">
-          <tui-textarea isCounter autoHeight v-model="form.content" textarea-border maxlength="500"
-            placeholder="工作经历" />
+        <tui-form-item direction="column" label="工作经历" rightContent=">" content-margin-top="8px"
+          @click-right="gotoWorkExperience()">
+          <work-view-card :info="form" :show-more="false" />
         </tui-form-item>
 
-        <tui-form-item direction="column" label="我的作品" content-margin-top="8px">
-          <tui-textarea isCounter autoHeight v-model="form.content" textarea-border maxlength="500"
-            placeholder="我的作品" />
+        <tui-form-item direction="column" label="我的作品" :rightContent="`${totalMyCreation} >`" content-margin-top="8px"
+          @click-right="gotoMyCreation()">
+          <my-creation-view-card :info="form" :show-more="false" />
         </tui-form-item>
 
         <tui-form-item direction="column" label="我的成就" content-margin-top="8px">
@@ -145,22 +144,34 @@
   import {
     mapGetters
   } from 'vuex';
-  import {
-    isVerifyIdCard,
-    isValidCellPhone
-  } from '@/common/regular.js';
   import FormMixin from '@/mixins/formMixin.js'
+  import EducationViewCard from '@/packageA/pages/components/education-view-card/index.vue'
+  import WorkViewCard from '@/packageA/pages/components/work-view-card/index.vue'
+  import MyCreationViewCard from '@/packageA/pages/components/my-creation-view-card/index.vue'
+
   import {
     getInformation,
     saveInformation,
     clearInfomation
   } from '@/packageA/pages/mine/edit/var.js'
   import {
+    getValidValue
+  } from '@/common/utils.js'
+  import {
     getTestList
   } from '@/apis/test.js'
-
+  import {
+    isVerifyIdCard,
+    isValidCellPhone,
+    isValidEmail
+  } from '@/common/regular.js';
 
   export default {
+    components: {
+      EducationViewCard,
+      WorkViewCard,
+      MyCreationViewCard
+    },
     props: {
       isStaff: {
         type: Boolean,
@@ -168,7 +179,6 @@
       }
     },
     mixins: [FormMixin],
-    components: {},
     data() {
       return {
         fromLoad: false,
@@ -188,15 +198,32 @@
           mailAddress: '',
           // 工作组别/角色
           workGroup: '',
+          // 教育经历
+          eduSchool: '',
+          eduDate: [],
+          eduSpeciality: '',
+          eduEducation: '',
+          eduExperience: '',
+          // 工作经历
+          workCompany: '',
+          workIndustry: '',
+          workDate: [],
+          workDepartment: '',
+          workJob: '',
+          workContent: '',
+          // 我的作品
+          myCreationImages: [],
+          myCreationVideos: [],
 
           avatarUrl: '',
           nickname: '',
-          mobile: '',
+          phone: '',
           gender: '男',
           fullName: '',
-          idCard: undefined,
-          portraitImages: [],
-          emblemImages: [],
+          idCard: '',
+          email: '',
+          portraitUrl: '',
+          emblemUrl: ''
         },
         id: undefined,
         msgType: 'error',
@@ -235,7 +262,22 @@
       };
     },
     computed: {
-      ...mapGetters(['userInfo'])
+      ...mapGetters(['userInfo']),
+      totalMyCreation() {
+        let imageCnt = 0
+        let videoCnt = 0
+        if (this.form.myCreationImages) {
+          imageCnt = this.form.myCreationImages.length
+        }
+        if (this.form.myCreationVideos) {
+          videoCnt = this.form.myCreationVideos.length
+        }
+        if (imageCnt || videoCnt) {
+          const imageStr = imageCnt ? `${imageCnt}张照片 ` : ''
+          const videoStr = videoCnt ? ` ${videoCnt}个视频` : ''
+          return `共${imageStr}${videoStr}`
+        }
+      }
     },
     onLoad(params) {
       this.id = params.id
@@ -257,13 +299,25 @@
       },
       clearLocalStorageData() {
         console.log('clearLocalStorageData')
-        clearInfomation()
+        // clearInfomation()
       },
       getLocalStorageData() {
         const info = getInformation()
         Object.keys(this.form).map(key => {
           this.form[key] = info[key]
         })
+        // 初始化性别
+        this.form.gender = this.form.gender || '男'
+        // 身份证照片
+        this.$nextTick(() => {
+          if (this.form.portraitUrl) {
+            this.$refs.portraitImage.initData([this.form.portraitUrl])
+          }
+          if (this.form.emblemUrl) {
+            this.$refs.emblemImage.initData([this.form.emblemUrl])
+          }
+        })
+        console.log('local=', this.form)
       },
       getItemData() {
         getTestList().then(() => {
@@ -272,11 +326,11 @@
       },
       // 身份证人像图
       onChangePortraitImages(urls) {
-        this.form.portraitImages = urls[0]
+        this.form.portraitUrl = urls[0]
       },
       // 身份证国徽图
       onChangeEmblemImages(urls) {
-        this.form.emblemImages = urls[0]
+        this.form.emblemUrl = urls[0]
       },
       // 性别
       onChangeGenderTag(item) {
@@ -326,23 +380,61 @@
           })
         })
       },
-      checkMobile() {
-        const reg = /[^\d]/g;
-        if (this.form && this.form.mobile) {
-          return reg.test(this.form.mobile);
-        } else if (!this.form || !this.form.mobile) {
-          return true;
-        } else {
-          return true;
-        }
+      // 新增工作经历
+      gotoWorkExperience() {
+        this.save().then(() => {
+          uni.navigateTo({
+            url: `/packageA/pages/mine/edit/work-experience`
+          })
+        })
+      },
+      // 新增我的作品
+      gotoMyCreation() {
+        this.save().then(() => {
+          uni.navigateTo({
+            url: `/packageA/pages/mine/edit/my-creation`
+          })
+        })
+      },
+      // 检查身份证号码
+      checkIdCardNumber() {
+        const id = getValidValue(this.form.idCard)
+        const valid = isVerifyIdCard(id)
+        return valid && valid.msg ? false : true
+      },
+      // 检查身份证照片
+      checkIdCardImage() {
+        return this.form.portraitUrl && this.form.emblemUrl
       },
       checkValidate() {
         this.messageText = undefined
         let valid = true
-        if (!this.form.contactName) {
-          this.messageText = '请填写紧急联系人信息'
+        if (!getValidValue(this.form.nickname)) {
+          this.messageText = '请填写昵称'
+        } else if (!getValidValue(this.form.gender)) {
+          this.messageText = '请选择性别'
+        } else if (!getValidValue(this.form.fullName)) {
+          this.messageText = '请填写姓名'
+        } else if (!getValidValue(this.form.phone)) {
+          this.messageText = '请填写手机号码'
+        } else if (!isValidCellPhone(this.form.phone)) {
+          this.messageText = '手机号码格式不正确'
+        } else if (!getValidValue(this.form.idCard)) {
+          this.messageText = '请填写身份证号'
+        } else if (!this.checkIdCardNumber()) {
+          this.messageText = '身份证号码格式不正确'
+        } else if (!this.checkIdCardImage()) {
+          this.messageText = '请上传身份证正反两张照片'
+        } else if (!getValidValue(this.form.email)) {
+          this.messageText = '请填写邮箱'
+        } else if (!isValidEmail(this.form.email)) {
+          this.messageText = '邮箱格式不正确'
         } else if (!this.form.mailName) {
           this.messageText = '请填写通讯地址信息'
+        } else if (!this.form.contactName) {
+          this.messageText = '请填写紧急联系人信息'
+        } else if (!getValidValue(this.form.workGroup)) {
+          this.messageText = '请选择工作组别/角色'
         }
 
         if (this.messageText) {
@@ -352,16 +444,16 @@
         return valid
       },
       submit() {
-        // if (this.checkValidate()) {
-        //   this.loading = true;
-        //   this.showLoading()
-        //   api.then(() => {
-        //     this.msgType = 'success';
-        //     this.$refs.message.open();
-        //     this.messageText = `保存成功`;
-        //     this.hideLoading()
-        //   }).catch(() => (this.hideLoading()));
-        // }
+        if (this.checkValidate()) {
+          // this.loading = true;
+          // this.showLoading()
+          // api.then(() => {
+          //   this.msgType = 'success';
+          //   this.$refs.message.open();
+          //   this.messageText = `保存成功`;
+          //   this.hideLoading()
+          // }).catch(() => (this.hideLoading()));
+        }
       }
     }
   };

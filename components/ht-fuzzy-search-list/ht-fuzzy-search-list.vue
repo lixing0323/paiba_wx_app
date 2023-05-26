@@ -64,13 +64,23 @@
         messageText: ''
       };
     },
-    watch: {},
+    watch: {
+      value: {
+        handler(val) {
+          this.key = val
+          this.$emit('search')
+        },
+        immediate: true
+      }
+    },
+    created() {},
     methods: {
       onClearKey() {
         this.key = ''
       },
       inputKey(e) {
-        this.key = trim(e.detail.value);
+        console.log('inputkey', this.key)
+        this.key = trim(e.detail.value)
         if (!this.key) {
           this.$emit('clear')
         } else {
@@ -80,6 +90,7 @@
       checkValidate() {
         this.messageText = undefined
         let valid = true
+        console.log(this.key, 'key')
         if (!this.key) {
           this.messageText = '请填写内容'
         }

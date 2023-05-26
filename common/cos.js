@@ -32,13 +32,23 @@ var getAuthorization = function(options, callback) {
 };
 
 // 初始化实例
-var cos = new COS({
+// var cos = new COS({
+//   // path style 指正式请求时，Bucket 是在 path 里，这样用相同园区多个 bucket 只需要配置一个园区域名
+//   // ForcePathStyle: true,
+//   getAuthorization: getAuthorization,
+//   // 是否使用全球加速域名。开启该配置后仅以下接口支持操作：putObject、getObject、headObject、optionsObject、multipartInit、multipartListPart、multipartUpload、multipartAbort、multipartComplete、multipartList、sliceUploadFile、uploadFiles
+//   // UseAccelerate: true,
+// });
+
+// 初始化实例
+const cos = new COS({
   // path style 指正式请求时，Bucket 是在 path 里，这样用相同园区多个 bucket 只需要配置一个园区域名
   // ForcePathStyle: true,
-  getAuthorization: getAuthorization,
+  SecretId: 'AKIDRnwq8dHD6kZAXfaDgz6lAIlz5vWqmYdJ',
+  SecretKey: 'qheOB71hWTeiWRXxNyOoxsjT2TghRzIJ'
   // 是否使用全球加速域名。开启该配置后仅以下接口支持操作：putObject、getObject、headObject、optionsObject、multipartInit、multipartListPart、multipartUpload、multipartAbort、multipartComplete、multipartList、sliceUploadFile、uploadFiles
   // UseAccelerate: true,
-});
+})
 
 // 分片上传
 export function sliceUploadFileOnCOS(files, onUploadProgress = null, onUploadFinish = null) {

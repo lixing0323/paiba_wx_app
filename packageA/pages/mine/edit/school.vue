@@ -31,9 +31,7 @@
     },
     methods: {
       getItemData() {
-        const info = getInformation()
-        this.value = info.eduSchool
-        console.log(this.value)
+        this.value = getInformation().eduSchool
       },
       onClear() {
         this.list = []

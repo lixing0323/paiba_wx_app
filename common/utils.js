@@ -254,6 +254,16 @@ export function getTimeRemaining(start) {
   }
 }
 
+function getValidValue(value) {
+  let valid = true
+  if (value === null || value === undefined || value === '') {
+    valid = false
+  } else if (typeof value === 'string' && !value.length) {
+    value = value.trim()
+  }
+  return valid ? value : false
+}
+
 export {
   formatTime,
   formatLocation,
@@ -264,5 +274,6 @@ export {
   getMultiplicationOfFloat,
   getDivisionOfFloat,
   setMessageCount,
-  deepClone
+  deepClone,
+  getValidValue
 }

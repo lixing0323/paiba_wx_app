@@ -14,9 +14,18 @@
         </view>
       </slot>
     </upload-image>
-    <upload-file v-if="fileMediatype !== 'image' || showType !== 'grid'" :readonly="readonly" :list-styles="listStyles"
-      :files-list="filesList" :showType="showType" :delIcon="delIcon" @uploadFiles="uploadFiles" @choose="choose"
-      @delFile="delFile">
+    <upload-video v-else-if="fileMediatype === 'video' && showType === 'grid'" :readonly="readonly"
+      :image-styles="imageStyles" :files-list="filesList" :limit="limitLength" :disablePreview="disablePreview"
+      :delIcon="delIcon" @uploadFiles="uploadFiles" @choose="choose" @delFile="delFile">
+      <slot>
+        <view class="is-add">
+          <view class="icon-add"></view>
+          <view class="icon-add rotate"></view>
+        </view>
+      </slot>
+    </upload-video>
+    <upload-file v-else :readonly="readonly" :list-styles="listStyles" :files-list="filesList" :showType="showType"
+      :delIcon="delIcon" @uploadFiles="uploadFiles" @choose="choose" @delFile="delFile">
       <slot>
         <button v-if="isButton" type="primary" size="mini">选择文件</button>
         <template v-else>
@@ -56,6 +65,7 @@
   } from './utils.js';
   import uploadImage from './upload-image.vue';
   import uploadFile from './upload-file.vue';
+  import uploadVideo from './upload-video.vue';
   import {
     login
   } from '../../apis/user.js';
@@ -105,7 +115,8 @@
     name: 'uniFilePicker',
     components: {
       uploadImage,
-      uploadFile
+      uploadFile,
+      uploadVideo
     },
     emits: ['select', 'success', 'fail', 'progress', 'delete', 'update:modelValue', 'input'],
     props: {
@@ -216,7 +227,7 @@
       },
       maxSize: {
         type: Number,
-        default: 2000000
+        default: 1024 * 1024 * 10
       }
     },
     data() {
@@ -244,8 +255,6 @@
       },
       // #endif
       imageList: {
-        deep: true,
-        immediate: true,
         handler: function(val) {
           this.$emit('selection-change', val);
         }
@@ -257,7 +266,7 @@
         return files;
       },
       showType() {
-        if (this.fileMediatype === 'image') {
+        if (this.fileMediatype === 'image' || this.fileMediatype === 'video') {
           return this.mode;
         }
         return 'list';
@@ -269,9 +278,6 @@
         if (!this.limit) {
           return 1;
         }
-        // if (this.limit >= 9) {
-        //   return 9;
-        // }
         return this.limit;
       }
     },
@@ -619,7 +625,7 @@
           if (files[i].size > this.maxSize) {
             valid = false;
             uni.showToast({
-              title: `选择的文件不能超过 ${this.maxSize / 1000000} M`,
+              title: `选择的文件不能超过 ${this.maxSize / 1024 / 1024} MB`,
               icon: 'none'
             });
           }

@@ -11,8 +11,8 @@
         <slot name="left"></slot>
       </view>
       <view class="right-content">
-        <view class="tui-form__item-right">
-          <view v-if="rightContent" :style="{'color': rightContentColor}" @click="clickRightContent()">
+        <view class="tui-form__item-right" @click="clickRightContent()">
+          <view v-if="rightContent" :style="{'color': rightContentColor}">
             {{ rightContent }}
           </view>
           <slot v-else name="right"></slot>
@@ -183,6 +183,10 @@
 
   .tui-form__item-right {
     float: right;
+    min-width: 300rpx;
+    text-align: right;
+    display: flex;
+    justify-content: right;
   }
 
   .tui-form__item-bottom {

@@ -65,7 +65,10 @@
     },
     methods: {
       getItemData() {
-        this.form = Object.assign({}, getEmergencyContact())
+        const info = getEmergencyContact()
+        Object.keys(this.form).map(key => {
+          this.form[key] = info[key]
+        })
       },
       checkValidate() {
         this.messageText = undefined

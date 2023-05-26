@@ -148,7 +148,7 @@
           }
         },
         {
-          "path": "pages/mine/edit/my-works",
+          "path": "pages/mine/edit/my-creation",
           "style": {
             "navigationBarTitleText": "编辑我的作品"
           }
