@@ -1,8 +1,9 @@
 <template>
   <view class="uni-file-picker__container">
-    <view class="file-picker__box" v-for="(item,index) in filesList" :key="index" :style="boxStyle">
+    <view class="file-picker__box video-box" v-for="(item,index) in filesList" :key="index" :style="boxStyle">
       <view class="file-picker__box-content" :style="borderStyle">
-        <video :id="`video-${index}`" class="file-image" :src="item.url" controls @play="onPlay(item, index)"></video>
+        <video :id="`video-${index}`" class="file-image" :src="item.url" :direction="90" controls
+          @play="onPlay(item, index)"></video>
 
         <view v-if="delIcon && !readonly" class="icon-del-box" @click.stop="delFile(index)">
           <view class="icon-del"></view>
@@ -276,5 +277,9 @@
     height: 2px;
     background-color: #fff;
     border-radius: 2px;
+  }
+
+  .video-box {
+    width: 100% !important;
   }
 </style>

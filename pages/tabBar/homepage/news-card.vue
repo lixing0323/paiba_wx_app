@@ -26,7 +26,7 @@
     },
     data() {
       return {
-        testSrc: require('@/static/icon/logo.png')
+        testSrc: require('@/static/icon/finish.png')
       };
     },
     methods: {

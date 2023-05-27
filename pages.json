@@ -164,6 +164,12 @@
           "style": {
             "navigationBarTitleText": "编辑自我评价"
           }
+        },
+        {
+          "path": "pages/mine/edit/avatar",
+          "style": {
+            "navigationBarTitleText": "个人头像"
+          }
         }
       ]
     },
@@ -235,6 +241,7 @@
       "tui-textarea": "@/components/tui-textarea/tui-textarea.vue",
       "tui-banner-arc": "@/components/tui-banner-arc/tui-banner-arc.vue",
       "tui-code-input": "@/components/tui-code-input/tui-code-input.vue",
+      "tui-picture-cropper": "@/components/tui-picture-cropper/tui-picture-cropper.vue",
       "tui-picker": "@/components/tui-picker/tui-picker.vue",
       "tui-input": "@/components/tui-input/tui-input.vue",
       "tui-dialog": "@/components/tui-dialog/tui-dialog.vue",

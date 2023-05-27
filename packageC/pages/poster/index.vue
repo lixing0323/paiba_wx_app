@@ -1,6 +1,7 @@
 <template>
   <view class="poster">
-    <image class="background-image" src="https://financing-platform-1253330314.cos.ap-shanghai.myqcloud.com/wxapp-img/poster.jpg" />
+    <image class="background-image"
+      src="https://financing-platform-1253330314.cos.ap-shanghai.myqcloud.com/wxapp-img/poster.jpg" />
 
     <view class="content">
       <view class="info">
@@ -53,7 +54,7 @@
     },
     computed: {
       avatarUrl() {
-        let url = require('@/static/img/user-profile.png')
+        let url = require('@/static/icon/avatar.png')
         if (this.userInfo && this.userInfo.avatarUrl) {
           url = this.userInfo.avatarUrl
         }

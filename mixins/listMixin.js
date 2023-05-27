@@ -16,7 +16,7 @@ export default {
         textNoMore: '暂无更多数据',
         noMoreSize: 5,
         empty: {
-          icon: require('@/static/module/mescroll-empty.png'),
+          icon: require('@/static/icon/mescroll-empty.png'),
           tip: '暂无相关数据'
         },
         toTop: {

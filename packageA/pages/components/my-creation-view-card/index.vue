@@ -36,7 +36,7 @@
     watch: {
       'info.myCreationImages': {
         handler(val) {
-          if (val && val.length > 0) {
+          if (val && val.length > 0 && this.showMore) {
             this.$nextTick(() => {
               this.$refs.images.initData(val);
             })
@@ -47,7 +47,7 @@
       },
       'info.myCreationVideos': {
         handler(val) {
-          if (val && val.length > 0) {
+          if (val && val.length > 0 && this.showMore) {
             this.$nextTick(() => {
               this.$refs.videos.initData(val);
             })
@@ -67,4 +67,5 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '@/common/business.scss';
 </style>

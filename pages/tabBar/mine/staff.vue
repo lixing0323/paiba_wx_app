@@ -5,7 +5,7 @@
       <view class="mine-user-info-container">
         <view @click="onLogin" style="display: flex;flex: 3;align-items: center">
           <view class="user-pic">
-            <image :src="(userInfo && staffInfo && staffInfo.avatarUrl) || require('@/static/img/user-profile.png')" />
+            <image :src="(userInfo && staffInfo && staffInfo.avatarUrl) || require('@/static/icon/avatar.png')" />
           </view>
           <view :class="{'margin-bottom-10': userInfo, 'user-info': true}">
             <text v-if="!userInfo">请登录</text>

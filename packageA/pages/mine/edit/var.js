@@ -3,6 +3,13 @@ import {
   setPersonalInfoStorage
 } from '@/store/localStorage.js'
 
+export function _trim(value) {
+  if (typeof value === 'string' && !value.length) {
+    value = value.trim()
+  }
+  return value
+}
+
 export function getInformation() {
   return getPersonalInfoStorage() || {}
 }
@@ -15,13 +22,20 @@ export function clearInfomation() {
   setPersonalInfoStorage({})
 }
 
+// 保存头像
+export function saveAvatar(avatar) {
+  const info = getInformation()
+  info.avatarUrl = avatar
+  saveInformation(info)
+}
+
 // 保存紧急联系人信息
 export function saveEmergencyContact(form) {
   const info = getInformation()
-  info.contactName = form.name.trim()
-  info.contactRelation = form.relation
+  info.contactName = _trim(form.name)
+  info.contactRelation = _trim(form.relation)
   info.contactPhone = form.phone
-  info.contactAddress = form.address
+  info.contactAddress = _trim(form.address)
   saveInformation(info)
 }
 
@@ -38,10 +52,10 @@ export function getEmergencyContact() {
 // 保存通讯地址信息
 export function saveMailAddress(form) {
   const info = getInformation()
-  info.mailName = form.name.trim()
+  info.mailName = _trim(form.name)
   info.mailRegion = form.region
   info.mailPhone = form.phone
-  info.mailAddress = form.address
+  info.mailAddress = _trim(form.address)
   saveInformation(info)
 }
 
@@ -58,11 +72,11 @@ export function getMailAddress() {
 // 保存教育经历
 export function saveEducationExperience(form) {
   const info = getInformation()
-  info.eduSchool = form.school
+  info.eduSchool = _trim(form.school)
   info.eduDate = form.date
-  info.eduSpeciality = form.speciality
+  info.eduSpeciality = _trim(form.speciality)
   info.eduEducation = form.education
-  info.eduExperience = form.experience
+  info.eduExperience = _trim(form.experience)
   saveInformation(info)
 }
 
@@ -98,12 +112,12 @@ export function getEducationExperience() {
 // 保存工作经历
 export function saveWorkExperience(form) {
   const info = getInformation()
-  info.workCompany = form.company
-  info.workIndustry = form.industry
+  info.workCompany = _trim(form.company)
+  info.workIndustry = _trim(form.industry)
   info.workDate = form.date
-  info.workDepartment = form.department
-  info.workJob = form.job
-  info.workContent = form.content
+  info.workDepartment = _trim(form.department)
+  info.workJob = _trim(form.job)
+  info.workContent = _trim(form.content)
   saveInformation(info)
 }
 
@@ -156,5 +170,50 @@ export function getMyCreation() {
   return {
     images: info.myCreationImages,
     videos: info.myCreationVideos
+  }
+}
+
+// 保存我的成就
+export function saveMyAchievement(form) {
+  const info = getInformation()
+  info.myAchievementContent = form.content
+  saveInformation(info)
+}
+
+export function getMyAchievement() {
+  const info = getInformation()
+  return {
+    content: _trim(info.myAchievementContent)
+  }
+}
+
+// 保存自我评价
+export function saveSelfEvaluation(form) {
+  const info = getInformation()
+  info.selfEvaluationContent = form.content
+  saveInformation(info)
+}
+
+export function getSelfEvaluation() {
+  const info = getInformation()
+  return {
+    content: _trim(info.selfEvaluationContent)
+  }
+}
+
+// 作品描述
+export function getCreationDescription(images, videos) {
+  let imageCnt = 0
+  let videoCnt = 0
+  if (images) {
+    imageCnt = images.length
+  }
+  if (videos) {
+    videoCnt = videos.length
+  }
+  if (imageCnt || videoCnt) {
+    const imageStr = imageCnt ? `${imageCnt}张照片 ` : ''
+    const videoStr = videoCnt ? ` ${videoCnt}个视频` : ''
+    return `共${imageStr}${videoStr}`
   }
 }

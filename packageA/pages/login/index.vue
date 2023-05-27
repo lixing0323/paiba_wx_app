@@ -76,8 +76,7 @@
     data() {
       return {
         logoSrc: '',
-        wechatLogo: require('@/static/img/wechat.png'),
-        managerLogo: require('@/static/img/manager-login.png'),
+        wechatLogo: require('@/static/icon/wechat.png'),
         isWxLogin: true,
         loginForm: {
           username: undefined

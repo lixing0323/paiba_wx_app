@@ -1,6 +1,6 @@
 <template>
   <ht-card v-if="info.eduSchool">
-    <view class="education-container">
+    <view class="business-view-card-container">
       <view class="row">
         <view class="label">学校：</view>
         <view class="value school">{{ info.eduSchool }}</view>
@@ -56,20 +56,5 @@
 </script>
 
 <style lang="scss" scoped>
-  .education-container {
-    .row {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      font-size: 24rpx;
-    }
-
-    .lable {
-      font-weight: bold;
-    }
-
-    .value {
-      color: #bbb;
-    }
-  }
+  @import '@/common/business.scss';
 </style>

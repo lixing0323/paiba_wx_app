@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="avatar">
-      <image class="image" :src="require('@/static/img/user-profile.png')" />
+      <image class="image" :src="require('@/static/icon/avatar.png')" />
     </view>
 
     <view class="tui-form-container">

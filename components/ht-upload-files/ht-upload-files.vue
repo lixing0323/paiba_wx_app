@@ -40,6 +40,10 @@
         </template>
       </slot>
     </upload-file>
+
+    <tui-picture-cropper v-if="isCropper" v-show="showCropper" :height="cropperHeight" :width="cropperWidth"
+      :imageUrl="cropperImageUrl" @cropper="cropper" @cancel="showCropper=false" @back="showCropper=false">
+    </tui-picture-cropper>
   </view>
 </template>
 
@@ -225,6 +229,18 @@
         type: Boolean,
         default: false
       },
+      isCropper: {
+        type: Boolean,
+        default: false
+      },
+      cropperHeight: {
+        type: Number,
+        default: 280
+      },
+      cropperWidth: {
+        type: Number,
+        default: 280
+      },
       maxSize: {
         type: Number,
         default: 1024 * 1024 * 10
@@ -234,7 +250,9 @@
       return {
         files: [],
         localValue: [],
-        imageList: []
+        imageList: [],
+        cropperImageUrl: '',
+        showCropper: false
       };
     },
     watch: {
@@ -340,18 +358,20 @@
       async setValue(newVal, oldVal) {
         const newData = async v => {
           const reg = /cloud:\/\/([\w.]+\/?)\S*/;
-          let url = '';
-          if (v.fileID) {
-            url = v.fileID;
-          } else {
-            url = v.url;
+          if (v) {
+            let url = '';
+            if (v.fileID) {
+              url = v.fileID;
+            } else {
+              url = v.url;
+            }
+            if (reg.test(url)) {
+              v.fileID = url;
+              v.url = await this.getTempFileURL(url);
+            }
+            if (v.url) v.path = v.url;
+            return v;
           }
-          if (reg.test(url)) {
-            v.fileID = url;
-            v.url = await this.getTempFileURL(url);
-          }
-          if (v.url) v.path = v.url;
-          return v;
         };
         if (this.returnType === 'object') {
           if (newVal) {
@@ -372,7 +392,7 @@
           this.formItem.setValue(this.localValue);
         }
         let filesData = Object.keys(newVal).length > 0 ? newVal : [];
-        this.files = [].concat(filesData);
+        this.initData(filesData)
       },
 
       /**
@@ -437,34 +457,41 @@
 
         // 检查文件大小
         if (this.checkMaxSize(files)) {
-          let currentData = [];
-          for (let i = 0; i < files.length; i++) {
-            if (this.limitLength - this.files.length <= 0) break;
-            files[i].uuid = Date.now();
-            let filedata = await get_file_data(files[i], this.fileMediatype);
-            filedata.progress = 0;
-            filedata.status = 'ready';
-            this.files.push(filedata);
-            currentData.push({
-              ...filedata,
-              file: files[i]
-            });
-          }
-
-          // 上传COS服务器
-          this.$emit('uploadCurrentFilesToCOS');
-          this.uploadCurrentFilesToCOS(currentData);
-
-          this.$emit('select', {
-            tempFiles: currentData,
-            tempFilePaths: filePaths
-          });
-          res.tempFiles = files;
-          // 停止自动上传
-          if (!this.autoUpload || this.noSpace) {
-            res.tempFiles = [];
+          if (this.isCropper) {
+            this.showCropper = true
+            this.cropperImageUrl = filePaths[0]
+          } else {
+            this.getFilesData(files)
           }
         }
+
+        res.tempFiles = files;
+        // 停止自动上传
+        if (!this.autoUpload || this.noSpace) {
+          res.tempFiles = [];
+        }
+      },
+
+      // 获取文件并上传
+      async getFilesData(files) {
+        let currentData = [];
+        for (let i = 0; i < files.length; i++) {
+          if (this.limitLength - this.files.length <= 0) break;
+          files[i].uuid = Date.now();
+          let filedata = await get_file_data(files[i], this.fileMediatype);
+          filedata.progress = 0;
+          filedata.status = 'ready';
+          this.files.push(filedata);
+          currentData.push({
+            ...filedata,
+            file: files[i]
+          });
+        }
+
+        // 上传COS服务器
+        this.uploadCurrentFilesToCOS(currentData);
+        // 事件
+        this.$emit('select', currentData);
       },
 
       // 上传COS服务器
@@ -495,6 +522,13 @@
         });
         this.imageList = this.imageList.concat(...images);
         uni.hideLoading();
+
+        // 如果是裁剪模式，那么需要关闭
+        if (this.isCropper) {
+          setTimeout(() => {
+            this.showCropper = false
+          }, 1000);
+        }
       },
       // 上传失败
       uploadError(data) {
@@ -631,6 +665,51 @@
           }
         }
         return valid;
+      },
+      // 裁剪
+      async cropper(e) {
+        // #ifdef APP-PLUS
+        let file = await this.dataURLtoBlob(e.url);
+        // #endif
+
+        // #ifndef APP-PLUS
+        const file = this.base64toFile(e.url, e.url);
+        // #endif
+
+        // 裁剪如果只有一个图片，那么需要处理
+        if (this.limit === 1) {
+          this.files = [].concat(e)
+          this.imageList = []
+        } else {
+          this.files.push(e)
+        }
+
+        const path = e.url
+        this.uploadCurrentFilesToCOS([{
+          file: file,
+          path: path
+        }])
+      },
+      dataURLtoBlob(url) {
+        return new Promise((resolve, reject) => {
+          plus.io.resolveLocalFileSystemURL(url, function(entry) {
+            entry.file(file => (resolve(file)))
+          })
+        })
+      },
+      //将base64转换为blob
+      base64toFile(dataurl, filename) {
+        var arr = dataurl.split(','),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+        while (n--) {
+          u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, {
+          type: mime
+        });
       }
     }
   };

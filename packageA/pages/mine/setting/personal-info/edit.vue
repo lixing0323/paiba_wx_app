@@ -1,11 +1,12 @@
 <template>
   <view>
     <view class="tui-form-container">
-      <view class="userinfo-detail">
+      <view>
         <tui-form-item asterisk label="头像">
           <template v-slot:right>
-            <view class="user-pic">
-              <image :src="form.avatarUrl || require('@/static/img/user-profile.png')" />
+            <view class="avatar" @click="gotoAvatar()">
+              <image class="image" :src="form.avatarUrl || require('@/static/icon/avatar.png')" />
+              <view class="symbol"> ></view>
             </view>
           </template>
         </tui-form-item>
@@ -103,19 +104,24 @@
           <work-view-card :info="form" :show-more="false" />
         </tui-form-item>
 
-        <tui-form-item direction="column" label="我的作品" :rightContent="`${totalMyCreation} >`" content-margin-top="8px"
-          @click-right="gotoMyCreation()">
+        <tui-form-item direction="column" label="我的作品"
+          :rightContent="`${getCreationDescription(form.myCreationImages, form.myCreationVideos)} >`"
+          content-margin-top="8px" @click-right="gotoMyCreation()">
           <my-creation-view-card :info="form" :show-more="false" />
         </tui-form-item>
 
-        <tui-form-item direction="column" label="我的成就" content-margin-top="8px">
-          <tui-textarea isCounter autoHeight v-model="form.content" textarea-border maxlength="500"
-            placeholder="我的成就" />
+        <tui-form-item direction="column" label="我的成就" rightContent=">" content-margin-top="8px"
+          @click-right="gotoMyAchievement()">
+          <ht-card v-if="form.myAchievementContent">
+            <view class="one-lines-ellipsis">{{ form.myAchievementContent }}</view>
+          </ht-card>
         </tui-form-item>
 
-        <tui-form-item direction="column" label="自我评价" content-margin-top="8px">
-          <tui-textarea isCounter autoHeight v-model="form.content" textarea-border maxlength="500"
-            placeholder="自我评价" />
+        <tui-form-item direction="column" label="自我评价" rightContent=">" content-margin-top="8px"
+          @click-right="gotoSelfEvaluation()">
+          <ht-card v-if="form.selfEvaluationContent">
+            <view class="one-lines-ellipsis">{{ form.selfEvaluationContent }}</view>
+          </ht-card>
         </tui-form-item>
       </view>
     </view>
@@ -152,7 +158,8 @@
   import {
     getInformation,
     saveInformation,
-    clearInfomation
+    clearInfomation,
+    getCreationDescription
   } from '@/packageA/pages/mine/edit/var.js'
   import {
     getValidValue
@@ -214,6 +221,10 @@
           // 我的作品
           myCreationImages: [],
           myCreationVideos: [],
+          // 我的成就
+          myAchievementContent: '',
+          // 自我评价
+          selfEvaluationContent: '',
 
           avatarUrl: '',
           nickname: '',
@@ -263,21 +274,6 @@
     },
     computed: {
       ...mapGetters(['userInfo']),
-      totalMyCreation() {
-        let imageCnt = 0
-        let videoCnt = 0
-        if (this.form.myCreationImages) {
-          imageCnt = this.form.myCreationImages.length
-        }
-        if (this.form.myCreationVideos) {
-          videoCnt = this.form.myCreationVideos.length
-        }
-        if (imageCnt || videoCnt) {
-          const imageStr = imageCnt ? `${imageCnt}张照片 ` : ''
-          const videoStr = videoCnt ? ` ${videoCnt}个视频` : ''
-          return `共${imageStr}${videoStr}`
-        }
-      }
     },
     onLoad(params) {
       this.id = params.id
@@ -290,6 +286,12 @@
       this.getLocalStorageData()
     },
     methods: {
+      getCreationDescription,
+      getItemData() {
+        getTestList().then(() => {
+          console.log('getItemData')
+        })
+      },
       // 保存
       save() {
         return new Promise((resolve, reject) => {
@@ -319,11 +321,6 @@
         })
         console.log('local=', this.form)
       },
-      getItemData() {
-        getTestList().then(() => {
-          console.log('getItemData')
-        })
-      },
       // 身份证人像图
       onChangePortraitImages(urls) {
         this.form.portraitUrl = urls[0]
@@ -335,6 +332,14 @@
       // 性别
       onChangeGenderTag(item) {
         this.form.gender = item
+      },
+      // 头像
+      gotoAvatar() {
+        this.save().then(() => {
+          uni.navigateTo({
+            url: `/packageA/pages/mine/edit/avatar`
+          })
+        })
       },
       // 紧急联系人
       gotoEditEmergencyContact() {
@@ -393,6 +398,22 @@
         this.save().then(() => {
           uni.navigateTo({
             url: `/packageA/pages/mine/edit/my-creation`
+          })
+        })
+      },
+      // 我的成就
+      gotoMyAchievement() {
+        this.save().then(() => {
+          uni.navigateTo({
+            url: `/packageA/pages/mine/edit/my-achievement`
+          })
+        })
+      },
+      // 自我评价
+      gotoSelfEvaluation() {
+        this.save().then(() => {
+          uni.navigateTo({
+            url: `/packageA/pages/mine/edit/self-evaluation`
           })
         })
       },
@@ -462,10 +483,13 @@
 <style lang="scss" scoped>
   @import '@/common/business.scss';
 
-  .userinfo-detail {
-    .user-pic {
+  .avatar {
+    display: flex;
+
+    .image {
       width: 42rpx;
       height: 42rpx;
+      margin-right: 10rpx;
 
       image {
         width: 100%;
@@ -474,37 +498,37 @@
         border-radius: 50%;
       }
     }
+  }
 
-    .gender-view {
-      display: flex;
+  .gender-view {
+    display: flex;
 
-      .gender-tag {
-        margin-left: 40rpx;
-      }
+    .gender-tag {
+      margin-left: 40rpx;
+    }
+  }
+
+  .id-card-upload {
+    display: flex;
+
+    .image {
+      flex: 1;
+      padding: 0 20rpx;
     }
 
-    .id-card-upload {
-      display: flex;
-
-      .image {
-        flex: 1;
-        padding: 0 20rpx;
-      }
-
-      ::v-deep .uni-file-picker .file-picker__box {
-        height: 100px !important;
-        width: 170px !important;
-      }
-
-      ::v-deep .uni-file-picker .file-picker__box-content {
-        background-color: #efefef !important;
-        border-radius: 20rpx !important;
-      }
-
-      .portrait-image {}
-
-      .emblem-image {}
+    ::v-deep .uni-file-picker .file-picker__box {
+      height: 100px !important;
+      width: 170px !important;
     }
+
+    ::v-deep .uni-file-picker .file-picker__box-content {
+      background-color: #efefef !important;
+      border-radius: 20rpx !important;
+    }
+
+    .portrait-image {}
+
+    .emblem-image {}
   }
 
   .click-view {

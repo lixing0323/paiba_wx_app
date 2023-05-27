@@ -16,7 +16,7 @@
         </template>
       </tui-form-item>
 
-      <view class="submit-bt-view"><button type="primary" @click="submit()" :disabled="loading">提交</button></view>
+      <view class="submit-bt-view"><button type="primary" @click="submit()" :disabled="loading">保存</button></view>
 
       <uni-popup ref="message" type="message">
         <uni-popup-message :type="msgType" :message="messageText" :duration="1500"></uni-popup-message>

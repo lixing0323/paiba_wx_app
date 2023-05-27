@@ -15,7 +15,7 @@
         type: Object,
         default () {
           return {
-            icon: require('@/static/module/mescroll-empty.png')
+            icon: require('@/static/icon/mescroll-empty.png')
           };
         }
       }

@@ -909,3 +909,20 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+
+.business-view-card-container {
+  .row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-size: 24rpx;
+  }
+  
+  .lable {
+    font-weight: bold;
+  }
+  
+  .value {
+    color: #bbb;
+  }
+}

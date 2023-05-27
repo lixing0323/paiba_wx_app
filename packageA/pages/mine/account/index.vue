@@ -3,7 +3,7 @@
     <view class="mine-user-info-container mine-container">
       <view @click="onLogin" style="display: flex;flex: 3;align-items: center">
         <view class="user-pic">
-          <image :src="(userInfo && customerInfo.avatarUrl) || require('@/static/img/user-profile.png')" />
+          <image :src="(userInfo && customerInfo.avatarUrl) || require('@/static/icon/avatar.png')" />
         </view>
         <view :class="{'margin-bottom-10': userInfo, 'user-info': true}">
           <view class="info">
