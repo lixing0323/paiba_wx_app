@@ -168,7 +168,13 @@
         {
           "path": "pages/mine/edit/avatar",
           "style": {
-            "navigationBarTitleText": "个人头像"
+            "navigationBarTitleText": "头像和昵称"
+          }
+        },
+        {
+          "path": "pages/mine/edit/phone",
+          "style": {
+            "navigationBarTitleText": "手机号码"
           }
         }
       ]
@@ -192,6 +198,12 @@
           "path": "pages/staff/order/expense",
           "style": {
             "navigationBarTitleText": "费用报销"
+          }
+        },
+        {
+          "path": "pages/user/order/evaluate",
+          "style": {
+            "navigationBarTitleText": "订单评价"
           }
         },
         {

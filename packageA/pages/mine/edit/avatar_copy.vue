@@ -1,25 +1,19 @@
 <template>
   <view>
-    <view class="tui-form-container">
-      <tui-form-item asterisk label="头像">
-        <template v-slot:right>
-          <view class="avatar-container">
-            <button class="avatar" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
-              <image class="image" :src="form.avatarUrl || require('@/static/icon/avatar.png')" />
-              <view class="symbol"> > </view>
-            </button>
-          </view>
-        </template>
-      </tui-form-item>
-      <tui-form-item asterisk label="昵称">
-        <template v-slot:right>
-          <input :value="form.nickName" class="input-view-value" type="nickname" placeholder="请填写" @blur="onNickName" />
-        </template>
-      </tui-form-item>
+    <view class="avatar-container">
+      <button class="avatar-wrapper" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+        <view class="avatar">
+          <image class="image" :src="avatarUrl"></image>
+        </view>
+      </button>
+    </view>
+
+    <view class="nickname-container">
+      <input class="input" type="nickname" placeholder="请输入昵称" v-model="nickName" @blur="onNickName" />
     </view>
 
     <view class="submit-bt-view">
-      <button type="primary" @click="onSubmit">保存</button>
+      <button type="primary" @getphonenumber="getPhone">保存</button>
     </view>
 
     <uni-popup ref="message" type="message">
@@ -34,42 +28,39 @@
     sliceUploadFileOnCOS,
     filenameWithTimestamp
   } from '@/common/cos.js';
-  import {
-    getValidValue
-  } from '@/common/utils.js'
 
   import {
-    mapGetters
-  } from 'vuex';
+    get_files_and_is_max,
+    get_file_data,
+  } from '@/components/ht-upload-files/utils.js'
+
+  import {
+    getInformation,
+    saveAvatar
+  } from './var.js'
 
   export default {
     data() {
       return {
-        form: {
-          avatarUrl: '',
-          nickName: '',
-        },
+        avatarUrl: '',
+        nickName: '',
         messageText: ''
       }
-    },
-    computed: {
-      ...mapGetters(['token', 'userInfo'])
     },
     onLoad() {
       this.getItemData()
     },
     methods: {
       getItemData() {
-        this.form.nickName = this.userInfo.nickName
-        this.form.avatarUrl = this.userInfo.avatarUrl
+        this.avatarUrl = getInformation().avatarUrl || require('@/static/icon/avatar.png')
       },
       onNickName(e) {
-        this.form.nickName = e.detail.value
+        this.nickName = e.detail.value
       },
       onChooseAvatar(e) {
         const filePath = e.detail.avatarUrl
-        this.form.avatarUrl = filePath
-        console.log(e.detail, '111')
+        this.avatarUrl = filePath
+        console.log(this.avatarUrl, '111')
         wx.getFileSystemManager().readFile({
           filePath: filePath,
           encoding: 'base64',
@@ -120,31 +111,8 @@
         data.files.forEach(item => {
           images.push(getCosFileUrl(item.data));
         });
+        console.log(images)
         uni.hideLoading();
-      },
-      checkValidate() {
-        this.messageText = undefined
-        let valid = true
-        if (!this.form.avatarUrl) {
-          this.messageText = '请选择头像'
-        } else if (!getValidValue(this.form.nickName)) {
-          this.messageText = '请填写昵称'
-        }
-
-        if (this.messageText) {
-          this.$refs.message.open()
-          valid = false
-        }
-        return valid
-      },
-      onSubmit() {
-        if (this.checkValidate()) {
-          this.$store.dispatch('user/saveUserInfo', {
-            avatarUrl: this.form.avatarUrl,
-            nickName: this.form.nickName
-          });
-          uni.navigateBack()
-        }
       }
     }
   }
@@ -154,9 +122,11 @@
   @import '@/common/business.scss';
 
   .avatar-container {
+    margin-top: 80rpx;
+
     ::v-deep button {
       padding-right: 0;
-      line-height: 80rpx;
+      line-height: 100%;
       background-color: transparent;
     }
 
@@ -165,21 +135,30 @@
     }
   }
 
+
   .avatar {
     text-align: center;
     display: flex;
     justify-content: center;
 
     .image {
-      height: 80rpx;
-      width: 80rpx;
+      height: 400rpx;
+      width: 400rpx;
       border-radius: 50%;
-      margin-right: 10rpx;
-    }
 
-    .symbol {}
+    }
   }
 
+  .nickname-container {
+    margin-top: 80rpx;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+    .input {
+      width: 300rpx;
+    }
+  }
 
   .submit-bt-view {
     margin-top: 80rpx;

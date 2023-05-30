@@ -73,8 +73,6 @@ export default {
         if (this.mescroll) {
           this.mescroll.endByPage(response.items.length, response.page.totalPages);
         }
-      } else {
-        this.mescroll.endByPage(response.items.length, response.page.totalPages)
       }
     },
     getList() {},

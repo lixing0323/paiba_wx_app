@@ -21,6 +21,9 @@
           13212345678
         </template>
       </tui-form-item>
+    </view>
+
+    <view class="tui-form-container margin-top-20">
       <tui-form-item label="被邀请人">
         <template v-slot:right>
           <uni-tag class="role" circle size="mini" text="灯光师" type="primary" /> 李四
@@ -46,9 +49,15 @@
           陕西省西安市高新路22号 创业街区3楼306
         </template>
       </tui-form-item>
+    </view>
+
+    <view class="tui-form-container margin-top-20">
       <tui-form-item direction="column" label="工作内容与备注" content-margin-top="8px">
         <tui-textarea isCounter autoHeight v-model="a" textarea-border maxlength="200" placeholder="工作内容与备注" />
       </tui-form-item>
+    </view>
+
+    <view class="tui-form-container margin-top-20">
       <tui-form-item direction="column" label="特别备注" content-margin-top="8px">
         <tui-textarea isCounter autoHeight v-model="a" textarea-border maxlength="200" placeholder="工作内容与备注" />
       </tui-form-item>

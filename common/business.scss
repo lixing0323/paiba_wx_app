@@ -604,10 +604,6 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   margin-bottom: 20rpx;
 }
 
-.business-content-top-20 {
-  margin-top: 20rpx;
-}
-
 // 产品申请和我的需求卡片ui
 .apply-req-card {
 
@@ -917,12 +913,16 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     flex-wrap: wrap;
     font-size: 24rpx;
   }
-  
+
   .lable {
     font-weight: bold;
   }
-  
+
   .value {
     color: #bbb;
   }
+}
+
+.margin-top-20 {
+  margin-top: 20rpx
 }

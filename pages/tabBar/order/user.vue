@@ -1,5 +1,5 @@
 <template>
-  <view class="invite-container">
+  <view class="order-container">
     <view class="search-bar-container">
       <view class="tab">
         <uni-segmented-control :current="currentTab" :values="tabs" style-type="text" @clickItem="changeTab" />
@@ -13,8 +13,8 @@
       <mescroll-uni ref="mescrollRef" :height="mescrollHeight" @init="mescrollInit" @down="downCallback" :up="upOption"
         @up="getList" @emptyclick="emptyClick">
         <view>
-          <view v-for="(l, index) in list" :key="index" class="business-content-top-20">
-            <ht-invite-card :item="l" @click-item="clickItem" />
+          <view v-for="(l, index) in list" :key="index" class="margin-top-20">
+            <ht-order-card ref="order" :item="l" @click-item="clickItem" />
           </view>
         </view>
       </mescroll-uni>
@@ -36,9 +36,9 @@
     mixins: [ListMixin],
     data() {
       return {
-        searchHeight: 36,
         currentTab: 0,
-        tabs: ['全部', '待处理', '已同意', '已拒绝']
+        searchHeight: 36,
+        tabs: ['我创建的', '我参与的']
       }
     },
     computed: {
@@ -62,12 +62,13 @@
         getTestList(this.listQuery)
           .then(res => {
             this.afterGetList(res, page);
+            console.log(this.list)
           })
           .catch(() => this.errorList());
       },
       clickItem(row) {
         uni.navigateTo({
-          url: `/packageB/pages/invite/detail?id=1`
+          url: `/packageB/pages/staff/order/detail?id=1`
         })
       },
       changeTab(e) {
@@ -81,7 +82,7 @@
 <style lang="scss" scoped>
   @import '@/common/business.scss';
 
-  .invite-container {
+  .order-container {
     padding: 0 20rpx;
   }
 

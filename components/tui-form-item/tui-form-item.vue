@@ -186,7 +186,7 @@
     min-width: 300rpx;
     text-align: right;
     display: flex;
-    justify-content: right;
+    justify-content: flex-end;
   }
 
   .tui-form__item-bottom {

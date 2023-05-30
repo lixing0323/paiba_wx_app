@@ -5,12 +5,12 @@
         <tui-form-item label="头像">
           <template v-slot:right>
             <view class="avatar">
-              <image :src="form.avatarUrl || require('@/static/icon/avatar.png')" />
+              <image class="image" :src="form.avatarUrl || require('@/static/icon/avatar.png')" />
             </view>
           </template>
         </tui-form-item>
         <tui-form-item label="昵称">
-          <template v-slot:right> {{ getContent(form.nickname) }} </template>
+          <template v-slot:right> {{ getContent(form.nickName) }} </template>
         </tui-form-item>
         <tui-form-item label="性别">
           <template v-slot:right>{{ getContent(form.gender) }} </template>
@@ -151,7 +151,7 @@
           selfEvaluationContent: '',
 
           avatarUrl: '',
-          nickname: '',
+          nickName: '',
           phone: '',
           gender: '',
           fullName: '',
@@ -196,14 +196,15 @@
   @import '@/common/business.scss';
 
   .avatar {
-    width: 42rpx;
-    height: 42rpx;
+    text-align: center;
+    display: flex;
+    justify-content: center;
 
-    image {
-      width: 100%;
-      height: 100%;
-      vertical-align: middle;
+    .image {
+      height: 80rpx;
+      width: 80rpx;
       border-radius: 50%;
+      margin-right: 10rpx;
     }
   }
 

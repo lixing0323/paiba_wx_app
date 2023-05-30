@@ -4,16 +4,18 @@
       <view>
         <tui-form-item asterisk label="头像">
           <template v-slot:right>
-            <view class="avatar" @click="gotoAvatar()">
-              <image class="image" :src="form.avatarUrl || require('@/static/icon/avatar.png')" />
-              <view class="symbol"> ></view>
+            <view class="avatar-container">
+              <button class="avatar" open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
+                <image class="image" :src="form.avatarUrl || require('@/static/icon/avatar.png')" />
+                <view class="symbol"> > </view>
+              </button>
             </view>
           </template>
         </tui-form-item>
         <tui-form-item asterisk label="昵称">
           <template v-slot:right>
-            <input :value="form.nickname" class="input-view-value" placeholder="请填写"
-              @input="form.nickname = $event.detail.value" />
+            <input :value="form.nickName" type="nickName" class="input-view-value" placeholder="请填写"
+              @input="form.nickName = $event.detail.value" />
           </template>
         </tui-form-item>
         <tui-form-item asterisk label="性别">
@@ -130,16 +132,6 @@
       <button type="primary" @click="submit()" :disabled="loading">确定</button>
     </view>
 
-    <tui-picker :show="showWorkPicker" :layer="2" :pickerData="items__2" :params="1" @hide="showWorkPicker=false"
-      @change="onChangeWorkPicker">
-    </tui-picker>
-
-    <ht-dialog :visible.sync="dialogVisible" :z-index="1001" title="自定义角色" @click-right="onAddRole()">
-      <view v-if="dialogVisible">
-        <tui-input v-model="role" required label="角色名" placeholder="请输入角色名" maxlength="10" />
-      </view>
-    </ht-dialog>
-
     <uni-popup ref="message" type="message">
       <uni-popup-message :type="msgType" :message="messageText" :duration="1500" />
     </uni-popup>
@@ -188,10 +180,8 @@
     mixins: [FormMixin],
     data() {
       return {
-        fromLoad: false,
         loading: false,
         genderOptions: ['男', '女'],
-        dialogVisible: false,
         form: {
           // 紧急联系人信息
           contactName: '',
@@ -227,7 +217,7 @@
           selfEvaluationContent: '',
 
           avatarUrl: '',
-          nickname: '',
+          nickName: '',
           phone: '',
           gender: '男',
           fullName: '',
@@ -238,38 +228,7 @@
         },
         id: undefined,
         msgType: 'error',
-        messageText: undefined,
-        showWorkPicker: false,
-        workGroup: '',
-        role: '',
-        items__2: [{
-          text: '摄影组',
-          value: '100',
-          children: [{
-            text: '摄影师',
-            value: '10001'
-          }, {
-            text: '照相师',
-            value: '10002'
-          }]
-        }, {
-          text: '灯光组',
-          value: '200',
-          children: [{
-            text: '灯光师',
-            value: '20001'
-          }, {
-            text: '照明师',
-            value: '20002'
-          }]
-        }, {
-          text: '其他组',
-          value: '300',
-          children: [{
-            text: '自定义',
-            value: '20001'
-          }]
-        }],
+        messageText: undefined
       };
     },
     computed: {
@@ -333,14 +292,6 @@
       onChangeGenderTag(item) {
         this.form.gender = item
       },
-      // 头像
-      gotoAvatar() {
-        this.save().then(() => {
-          uni.navigateTo({
-            url: `/packageA/pages/mine/edit/avatar`
-          })
-        })
-      },
       // 紧急联系人
       gotoEditEmergencyContact() {
         this.save().then(() => {
@@ -358,24 +309,8 @@
         })
       },
       // 工作组别/角色
-      onChangeWorkPicker(e) {
-        if (e.text && e.text[1] === '自定义') {
-          this.workGroup = e.text[0]
-          this.dialogVisible = true
-          this.role = ''
-        } else {
-          this.form.workGroup = e.text.join('/')
-        }
-      },
-      // 新增角色名
-      onAddRole() {
-        if (!this.role) {
-          this.messageText = '请填写角色名称'
-          this.$refs.message.open()
-        } else {
-          this.dialogVisible = false
-          this.form.workGroup = `${this.workGroup}/${this.role}`
-        }
+      onChangeWorkPicker(value) {
+        this.form.workGroup = value
       },
       // 新增教育经历
       gotoEducationExperience() {
@@ -430,7 +365,7 @@
       checkValidate() {
         this.messageText = undefined
         let valid = true
-        if (!getValidValue(this.form.nickname)) {
+        if (!getValidValue(this.form.nickName)) {
           this.messageText = '请填写昵称'
         } else if (!getValidValue(this.form.gender)) {
           this.messageText = '请选择性别'
@@ -483,21 +418,31 @@
 <style lang="scss" scoped>
   @import '@/common/business.scss';
 
+  .avatar-container {
+    ::v-deep button {
+      padding-right: 0;
+      line-height: 80rpx;
+      background-color: transparent;
+    }
+
+    ::v-deep button::after {
+      border: 0;
+    }
+  }
+
   .avatar {
+    text-align: center;
     display: flex;
+    justify-content: center;
 
     .image {
-      width: 42rpx;
-      height: 42rpx;
+      height: 80rpx;
+      width: 80rpx;
+      border-radius: 50%;
       margin-right: 10rpx;
-
-      image {
-        width: 100%;
-        height: 100%;
-        vertical-align: middle;
-        border-radius: 50%;
-      }
     }
+
+    .symbol {}
   }
 
   .gender-view {

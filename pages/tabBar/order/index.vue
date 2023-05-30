@@ -1,7 +1,7 @@
 <template>
-  <view v-if="hasLogin()">
-    <staff-order />
-    <user-order v-if="false" />
+  <view v-if="hasLogin() || true">
+    <staff-order v-if="false" />
+    <user-order />
   </view>
 </template>
 
@@ -9,7 +9,7 @@
   import {
     mapGetters
   } from 'vuex';
-  import UserOrder from './staff'
+  import UserOrder from './user'
   import StaffOrder from './staff'
 
   export default {
@@ -24,16 +24,15 @@
       ...mapGetters(['token', 'userInfo'])
     },
     onLoad: function(options) {
-      if (!this.hasLogin()) {
-        uni.reLaunch({
-          url: `/packageA/pages/login/index`
-        });
-      }
+      // if (!this.hasLogin()) {
+      //   uni.reLaunch({
+      //     url: `/packageA/pages/login/index`
+      //   });
+      // }
     },
     methods: {
       hasLogin() {
-        // return this.token && this.userInfo
-        return true
+        return this.userInfo
       }
     }
   };

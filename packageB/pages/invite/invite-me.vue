@@ -13,8 +13,8 @@
       <mescroll-uni ref="mescrollRef" :height="mescrollHeight" @init="mescrollInit" @down="downCallback" :up="upOption"
         @up="getList" @emptyclick="emptyClick">
         <view>
-          <view v-for="(l, index) in list" :key="index" class="business-content-top-20">
-            <ht-invite-card :item="l" @click-item="clickItem" />
+          <view v-for="(l, index) in list" :key="index" class="margin-top-20">
+            <ht-invite-card :item="l" :invited="true" @click-item="clickItem" />
           </view>
         </view>
       </mescroll-uni>

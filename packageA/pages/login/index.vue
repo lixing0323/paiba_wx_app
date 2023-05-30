@@ -12,7 +12,7 @@
     <view class="common-padding">
       <view class="login-form-container wx-login-view">
         <template v-if="isWxLogin">
-          <button type="primary" class="wx-login-bt" open-type="getPhoneNumber" @getphonenumber="userBindPhone">
+          <button type="primary" open-type="getUserInfo" class="wx-login-bt" @getuserinfo="onWxLogin">
             <image :src="wechatLogo" :data-src="wechatLogo" class="wechat-logo" mode="widthFix"></image>
             <text class="wx-login-text">一键授权微信登录</text>
           </button>
@@ -97,9 +97,7 @@
         }
       }
     },
-    onLoad(params) {
-      this.getWxCode()
-    },
+    onLoad(params) {},
     beforeDestroy() {
       this.clearTimer();
     },
@@ -130,56 +128,30 @@
           }, 1000);
         }
       },
-      getWxCode(type) {
-        // uni.showLoading({
-        //   mask: true
-        // });
-        uni.login({
-          provider: 'weixin',
-          success: uniRes => {
-            uni.hideLoading();
-            console.log('wx-code', uniRes.code)
-          },
-          fail: () => {
-            uni.hideLoading();
-          }
-        })
-      },
       switchLoginType() {
         this.isWxLogin = !this.isWxLogin
       },
       onPasswordLogin() {
 
       },
-      userBindPhone(e) {
-        if (e.detail.code) {
-          uni.showLoading();
-          uni.login({
-            provider: 'weixin',
-            success: uniRes => {
-              getWxAppCode(uniRes.code).then((resp) => {
-                this.$store.dispatch('user/saveUserInfoWithToken', resp);
-                const data = this.codeQuery && this.codeQuery.scene ? {
-                  wxPhoneCode: e.detail.code,
-                  scene: this.codeQuery.scene
-                } : {
-                  wxPhoneCode: e.detail.code
-                }
-                wxBindPhone(data)
-                  .then(info => {
-                    uni.hideLoading();
-                    // 如果无数据，如果有token，则是注册用户
-                    this.$store.dispatch('user/saveUserInfoWithToken', info);
-                    // 登录首页
-                    this.$refs.alertDialog.open()
-                  })
-                  .catch(() => uni.hideLoading());
-              })
-            }
-          })
-        }
+      onWxLogin(e) {
+        uni.showLoading();
+        uni.login({
+          provider: 'weixin',
+          success: res => {
+            uni.hideLoading();
+            this.$store.dispatch('user/login', {
+              userInfo: e.detail.userInfo,
+              token: '123456'
+            });
+            this.goToHomepage()
+          },
+          fail: () => {
+            uni.hideLoading();
+          }
+        })
       },
-      goToHomepage(isFirstReg = false) {
+      goToHomepage() {
         uni.reLaunch({
           url: `/pages/tabBar/homepage/index`
         })

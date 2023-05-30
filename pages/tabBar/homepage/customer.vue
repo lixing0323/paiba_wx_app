@@ -21,7 +21,7 @@
       </swiper>
     </view>
 
-    <view class="order-scan">
+    <view class="order-scan" @click="gotoOrderDetail">
       <view class="scan-bt">扫一扫关联订单
         <view class="scan-icon">
           <uni-icons class="icon" type="scan" color="#5490F5" size="22"></uni-icons>
@@ -139,7 +139,12 @@
       },
       gotoMyInvitation() {
         uni.navigateTo({
-          url: `/packageB/pages/invite/myInvitation`
+          url: `/packageB/pages/invite/my-invitation`
+        })
+      },
+      gotoOrderDetail() {
+        uni.navigateTo({
+          url: `/packageB/pages/invite/detail?invited=${true}`
         })
       }
     }

@@ -1,7 +1,7 @@
 const PROJECT = 'paiba_wx_app'
-const TOKEN = `${PROJECT}_token`
-const USERINFO = `${PROJECT}_userInfo`
-const PERSONAL = `${PROJECT}_personalInfo`
+const TOKEN = 'token'
+const USERINFO = 'userInfo'
+const PERSONAL = 'personal'
 
 // 清除所有的localStorage储存
 export function deleteStorage() {
@@ -9,11 +9,11 @@ export function deleteStorage() {
 }
 
 export function setStorage(key, data) {
-  uni.setStorageSync(`${PROJECT}${key}`, data)
+  uni.setStorageSync(`${PROJECT}_${key}`, data)
 }
 
 export function getStorage(key) {
-  return uni.getStorageSync(`${PROJECT}${key}`)
+  return uni.getStorageSync(`${PROJECT}_${key}`)
 }
 
 // 设置储存token

@@ -438,6 +438,7 @@
        * @param {Object} res
        */
       async chooseFileCallback(res) {
+        console.log(res.tempFilePaths, res.tempFiles, _extname, '11')
         const _extname = get_extname(this.fileExtname);
         const is_one = (Number(this.limitLength) === 1 && this.disablePreview && !this.disabled) || this
           .returnType === 'object';
@@ -450,6 +451,7 @@
           filePaths,
           files
         } = get_files_and_is_max(res, _extname);
+
         if (!(_extname && _extname.length > 0)) {
           filePaths = res.tempFilePaths;
           files = res.tempFiles;
@@ -461,6 +463,7 @@
             this.showCropper = true
             this.cropperImageUrl = filePaths[0]
           } else {
+            console.log('2', files)
             this.getFilesData(files)
           }
         }

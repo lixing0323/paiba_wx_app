@@ -46,9 +46,24 @@
     computed: {
       ...mapGetters(['token', 'userInfo'])
     },
-    created() {},
+    onLoad() {
+      this.getPermission()
+    },
+    created() {
+
+    },
     onShow() {},
-    methods: {}
+    methods: {
+      getPermission() {
+        wx.getLocation({
+          type: 'wgs84',
+          success(res) {
+            console.log('纬度' + res.latitude)
+            console.log('经度' + res.longitude)
+          }
+        })
+      }
+    }
   };
 </script>
 

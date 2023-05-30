@@ -23,10 +23,19 @@ export function clearInfomation() {
 }
 
 // 保存头像
-export function saveAvatar(avatar) {
+export function saveAvatar(avatar, nickName) {
   const info = getInformation()
   info.avatarUrl = avatar
+  info.nickName = nickName
   saveInformation(info)
+}
+
+export function getAvatar() {
+  const info = getInformation()
+  return {
+    nickName: info.nickName,
+    avatarUrl: info.avatarUrl
+  }
 }
 
 // 保存紧急联系人信息
@@ -216,4 +225,5 @@ export function getCreationDescription(images, videos) {
     const videoStr = videoCnt ? ` ${videoCnt}个视频` : ''
     return `共${imageStr}${videoStr}`
   }
+  return ''
 }
