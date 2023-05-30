@@ -88,13 +88,7 @@
           </template>
         </tui-form-item>
 
-        <tui-form-item asterisk label="工作组别/角色">
-          <template v-slot:right>
-            <view class="click-view address" @click="showWorkPicker=true">
-              <text class="content">{{ form.workGroup }}</text> >
-            </view>
-          </template>
-        </tui-form-item>
+        <ht-edit-work-group-role :work-group="form.workGroup" />
 
         <tui-form-item direction="column" label="教育经历" rightContent=">" content-margin-top="8px"
           @click-right="gotoEducationExperience()">
@@ -267,8 +261,6 @@
         Object.keys(this.form).map(key => {
           this.form[key] = info[key]
         })
-        // 初始化性别
-        this.form.gender = this.form.gender || '男'
         // 身份证照片
         this.$nextTick(() => {
           if (this.form.portraitUrl) {

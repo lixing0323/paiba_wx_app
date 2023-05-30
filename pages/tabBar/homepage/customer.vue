@@ -63,7 +63,7 @@
     </view>
 
 
-    <view class="go-login" v-if="!userInfo && false">
+    <view class="go-login" v-if="!userInfo">
       <view>立即登录</view>
       <button type="primary" @click="goLogin"
         style="width: 54px;height: 50rpx;line-height: 50rpx;font-size: 24rpx;margin: 0;">登录</button>

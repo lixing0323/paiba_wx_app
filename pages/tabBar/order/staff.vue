@@ -9,34 +9,36 @@
     </view>
 
     <view>
-      <mescroll-uni ref="mescrollRef" :height="mescrollHeight" @init="mescrollInit" @down="downCallback" :up="upOption"
-        @up="getList" @emptyclick="emptyClick">
+      <mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" :up="upOption" @up="getList"
+        @emptyclick="emptyClick">
         <view>
           <view v-for="(l, index) in 10" :key="index" class="business-content-top-20">
-            <ht-order-card ref="order" :item="l" @click-item="clickItem" />
+            <ht-order-card ref="order" :item="l" @click-item="clickItem" @click-qr-code="onClickQrCode" />
           </view>
         </view>
-      </mescroll-uni>
+      </mescroll-body>
     </view>
+
+    <ht-order-qr-code :show.sync="dialogVisible" />
   </view>
 </template>
 
 <script>
   import ListMixin from '@/mixins/listMixin.js';
-  import MescrollUni from 'mescroll-uni/mescroll-uni.vue'
-
+  import MescrollBody from 'mescroll-uni/mescroll-body'
   import {
-    getServiceOrdersList
-  } from '@/apis/order.js'
+    getTestList
+  } from '@/apis/test.js'
 
   export default {
     components: {
-      MescrollUni
+      MescrollBody
     },
     mixins: [ListMixin],
     data() {
       return {
-        searchHeight: 36
+        searchHeight: 36,
+        dialogVisible: false
       }
     },
     computed: {
@@ -56,15 +58,17 @@
         });
       },
       getList(page) {
-        this.endList()
-        // this.beforeGetList(page);
-        // getServiceOrdersList(this.listQuery)
-        //   .then(res => {
-        //     this.afterGetList(res, page);
-        //   })
-        //   .catch(() => this.errorList());
+        this.beforeGetList(page);
+        getTestList(this.listQuery)
+          .then(res => {
+            this.afterGetList(res, page);
+          })
+          .catch(() => this.errorList());
       },
-      clickItem(row) {
+      onClickQrCode(row) {
+        this.dialogVisible = true
+      },
+      onClickItem(row) {
         uni.navigateTo({
           url: `/packageB/pages/staff/order/detail?id=1`
         })

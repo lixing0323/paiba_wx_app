@@ -1,5 +1,5 @@
 <template>
-  <view v-if="hasLogin() || true">
+  <view v-if="hasLogin()">
     <staff-order v-if="false" />
     <user-order />
   </view>
@@ -24,11 +24,11 @@
       ...mapGetters(['token', 'userInfo'])
     },
     onLoad: function(options) {
-      // if (!this.hasLogin()) {
-      //   uni.reLaunch({
-      //     url: `/packageA/pages/login/index`
-      //   });
-      // }
+      if (!this.hasLogin()) {
+        uni.reLaunch({
+          url: `/packageA/pages/login/index`
+        });
+      }
     },
     methods: {
       hasLogin() {

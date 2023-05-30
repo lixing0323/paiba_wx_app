@@ -19,13 +19,13 @@
         </template>
         <template v-else>
           <view>
-            <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="phone" v-model="loginForm.username"
-              placeholder="请输入手机号" :inputBorder="false" :styles="inputStyle" class="input">
+            <uni-easyinput height="80rpx" type="number" contentHeight="80rpx" prefixIcon="phone"
+              v-model="loginForm.username" placeholder="请输入手机号" :inputBorder="false" :styles="inputStyle" class="input">
             </uni-easyinput>
           </view>
           <view style="margin-top: 15px;">
-            <uni-easyinput height="80rpx" contentHeight="80rpx" prefixIcon="chat-filled" v-model="loginForm.password"
-              placeholder="请输入验证码" :inputBorder="false" :styles="inputStyle" class="input">
+            <uni-easyinput height="80rpx" type="number" contentHeight="80rpx" prefixIcon="chat-filled"
+              v-model="loginForm.password" placeholder="请输入验证码" :inputBorder="false" :styles="inputStyle" class="input">
               <template v-slot:right>
                 <view :class="{'disable-code-bt': countdownTimer}" class="sms-code-bt" @click="sendCode()">
                   {{ countDownButton }}

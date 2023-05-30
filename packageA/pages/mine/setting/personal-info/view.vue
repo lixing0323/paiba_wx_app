@@ -84,8 +84,11 @@
     </view>
 
     <view class="submit-bt-view">
-      <button type="primary" @click="submit()">修改</button>
+      <tui-form-button class="item" type="primary" @click="onSubmit()" :loading="updateBtLoading">修改</tui-form-button>
+      <tui-form-button plain class="item share" @click="onCreateQrCode()">生成二维码</tui-form-button>
     </view>
+
+    <ht-personal-qr-code :show.sync="dialogVisible" />
   </view>
 </template>
 <script>
@@ -115,7 +118,7 @@
     props: {},
     data() {
       return {
-        loading: false,
+        updateBtLoading: false,
         form: {
           // 紧急联系人信息
           contactName: '',
@@ -160,7 +163,8 @@
           portraitUrl: '',
           emblemUrl: ''
         },
-        id: undefined
+        id: undefined,
+        dialogVisible: false
       };
     },
     computed: {
@@ -183,10 +187,13 @@
       getContent(content) {
         return content || '-'
       },
-      submit() {
+      onSubmit() {
         uni.navigateTo({
           url: `/packageA/pages/mine/setting/personal-info/edit?id=1`
         })
+      },
+      onCreateQrCode() {
+        this.dialogVisible = true
       }
     }
   };
@@ -229,5 +236,17 @@
     .portrait-image {}
 
     .emblem-image {}
+  }
+
+  .submit-bt-view {
+    display: flex;
+
+    .item {
+      flex: 1;
+    }
+
+    .share {
+      margin-left: 40rpx !important;
+    }
   }
 </style>

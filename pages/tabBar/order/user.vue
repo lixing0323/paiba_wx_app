@@ -10,35 +10,38 @@
     </view>
 
     <view>
-      <mescroll-uni ref="mescrollRef" :height="mescrollHeight" @init="mescrollInit" @down="downCallback" :up="upOption"
-        @up="getList" @emptyclick="emptyClick">
+      <mescroll-body ref="mescrollRef" @init="mescrollInit" @down="downCallback" :up="upOption" @up="getList"
+        @emptyclick="emptyClick">
         <view>
           <view v-for="(l, index) in list" :key="index" class="margin-top-20">
-            <ht-order-card ref="order" :item="l" @click-item="clickItem" />
+            <ht-order-card ref="order" :item="l" @click-item="onClickItem" @click-qr-code="onClickQrCode" />
           </view>
         </view>
-      </mescroll-uni>
+      </mescroll-body>
     </view>
+
+    <ht-order-qr-code :show.sync="dialogVisible" />
   </view>
 </template>
 
 <script>
   import ListMixin from '@/mixins/listMixin.js';
-  import MescrollUni from 'mescroll-uni/mescroll-uni.vue'
+  import MescrollBody from 'mescroll-uni/mescroll-body'
   import {
     getTestList
   } from '@/apis/test.js'
 
   export default {
     components: {
-      MescrollUni
+      MescrollBody
     },
     mixins: [ListMixin],
     data() {
       return {
         currentTab: 0,
         searchHeight: 36,
-        tabs: ['我创建的', '我参与的']
+        tabs: ['我创建的', '我参与的'],
+        dialogVisible: false
       }
     },
     computed: {
@@ -62,14 +65,16 @@
         getTestList(this.listQuery)
           .then(res => {
             this.afterGetList(res, page);
-            console.log(this.list)
           })
           .catch(() => this.errorList());
       },
-      clickItem(row) {
+      onClickItem(row) {
         uni.navigateTo({
-          url: `/packageB/pages/staff/order/detail?id=1`
+          url: `/packageB/pages/user/order/detail?id=1`
         })
+      },
+      onClickQrCode(row) {
+        this.dialogVisible = true
       },
       changeTab(e) {
         this.currentTab = e.currentIndex

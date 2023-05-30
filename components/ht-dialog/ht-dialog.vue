@@ -71,6 +71,7 @@
     methods: {
       changeVisible() {
         this.$emit('update:visible', false)
+        this.$emit('change', false)
       },
       close() {
         this.changeVisible()

@@ -24,7 +24,7 @@
         </template>
       </tui-form-item>
 
-      <work-group-role :work-group.sync="form.workGroup" />
+      <ht-edit-work-group-role :work-group.sync="form.workGroup" />
 
       <tui-form-item label="日薪资">
         <template v-slot:right>
@@ -74,12 +74,8 @@
 </template>
 
 <script>
-  import WorkGroupRole from '@/packageA/pages/components/picker-work-role/index.vue'
-
   export default {
-    components: {
-      WorkGroupRole
-    },
+    components: {},
     data() {
       return {
         id: undefined,

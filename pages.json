@@ -207,6 +207,12 @@
           }
         },
         {
+          "path": "pages/user/order/detail",
+          "style": {
+            "navigationBarTitleText": "订单详情"
+          }
+        },
+        {
           "path": "pages/invite/invite-me",
           "style": {
             "navigationBarTitleText": "邀请我的"
@@ -231,16 +237,6 @@
           }
         }
       ]
-    },
-    {
-      "root": "packageC",
-      "name": "packageC",
-      "pages": [{
-        "path": "pages/search/product",
-        "style": {
-          "navigationBarTitleText": "产品搜索"
-        }
-      }]
     }
   ],
   "easycom": {
@@ -250,6 +246,7 @@
       "tui-timeaxis-item": "@/components/tui-timeaxis-item/tui-timeaxis-item.vue",
       "tui-time-axis": "@/components/tui-time-axis/tui-time-axis.vue",
       "tui-form-item": "@/components/tui-form-item/tui-form-item.vue",
+      "tui-form-button": "@/components/tui-form-button/tui-form-button.vue",
       "tui-textarea": "@/components/tui-textarea/tui-textarea.vue",
       "tui-banner-arc": "@/components/tui-banner-arc/tui-banner-arc.vue",
       "tui-code-input": "@/components/tui-code-input/tui-code-input.vue",
@@ -257,6 +254,8 @@
       "tui-picker": "@/components/tui-picker/tui-picker.vue",
       "tui-input": "@/components/tui-input/tui-input.vue",
       "tui-dialog": "@/components/tui-dialog/tui-dialog.vue",
+      "tui-landscape": "@/components/tui-landscape/tui-landscape.vue",
+      "tui-data-checkbox": "@/components/tui-data-checkbox/tui-data-checkbox.vue",
       "tui-(.*)": "thorui-uni/lib/thorui/tui-$1/tui-$1.vue"
     }
   },

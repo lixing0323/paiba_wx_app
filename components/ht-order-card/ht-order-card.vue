@@ -35,6 +35,10 @@
           待评价 <text class="symbol"> > </text>
         </view>
       </view>
+
+      <view class="qr-code" @click.stop="onShare()">
+        <image class="image" :src="qrCodeSrc" :data-src="qrCodeSrc" mode="widthFix"></image>
+      </view>
     </view>
   </ht-card>
 </template>
@@ -53,11 +57,16 @@
       }
     },
     data() {
-      return {}
+      return {
+        qrCodeSrc: require('@/static/icon/qrCode.png')
+      }
     },
     methods: {
       clickItem() {
         this.$emit('click-item', this.order)
+      },
+      onShare() {
+        this.$emit('click-qr-code', this.order)
       },
       gotoEvaluate() {
         uni.navigateTo({
@@ -101,6 +110,18 @@
       .symbol {
         margin-left: 20rpx;
       }
+    }
+  }
+
+  .qr-code {
+    position: absolute;
+    top: 20rpx;
+    right: 20rpx;
+
+    .image {
+      width: 100rpx;
+      height: 100rpx;
+      border: 1px solid #bbb;
     }
   }
 </style>

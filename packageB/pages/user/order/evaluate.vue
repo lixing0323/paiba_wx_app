@@ -73,28 +73,35 @@
       </ht-card>
     </view>
 
-    <view class="submit-bt-view"><button type="primary" @click="submit()">提交</button></view>
+    <view class="margin-top-20">
+      <tui-textarea isCounter autoHeight v-model="form.content" textarea-border maxlength="200" placeholder="留言评价" />
+    </view>
+
+    <view class="submit-bt-view">
+      <tui-form-button :loading="loadingBt" @click="submit()">提交</tui-form-button>
+    </view>
 
     <uni-popup ref="message" type="message">
       <uni-popup-message :type="msgType" :message="messageText" :duration="1500"></uni-popup-message>
     </uni-popup>
-
   </view>
 </template>
 
 <script>
   export default {
-    components: {},
+
     data() {
       return {
         id: undefined,
         items: [],
         msgType: 'error',
         messageText: '',
+        loadingBt: false,
         form: {
           attitude: 0,
           satisfaction: 0,
-          professional: 0
+          professional: 0,
+          content: ''
         }
       }
     },
@@ -103,8 +110,27 @@
     },
     onLoad(params) {},
     methods: {
-      submit() {
+      checkValidate() {
+        this.messageText = undefined
+        let valid = true
+        if (!this.form.attitude === 0) {
+          this.messageText = '请给服务态度打分'
+        } else if (!this.form.professional === 0) {
+          this.messageText = '请给服务专业打分'
+        } else if (!this.form.satisfaction === 0) {
+          this.messageText = '请给满意度打分'
+        }
 
+        if (this.messageText) {
+          this.$refs.message.open()
+          valid = false
+        }
+        return valid
+      },
+      submit() {
+        if (this.checkValidate()) {
+          uni.navigateBack()
+        }
       }
     }
   }
