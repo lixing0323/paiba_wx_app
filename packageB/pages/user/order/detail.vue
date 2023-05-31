@@ -76,9 +76,15 @@
       </tui-form-item>
     </view>
 
-    <view class="submit-bt-view">
-      <tui-form-button class="item" type="primary" @click="onSubmit()" :loading="updateBtLoading">修改</tui-form-button>
-      <tui-form-button plain class="item share" @click="onShare()">分享订单详情</tui-form-button>
+    <view v-if="isMyInvolved()" class="submit-bt-view">
+      <button type="primary" @click="gotoExpense()" :disabled="loading">费用报销</button>
+    </view>
+
+    <view v-if="isMyCreated()" class="submit-bt-view">
+      <view class="btns">
+        <tui-form-button class="item" type="primary" @click="onSubmit()" :loading="updateBtLoading">修改</tui-form-button>
+        <tui-form-button plain class="item right" @click="onShare()">分享订单详情</tui-form-button>
+      </view>
     </view>
 
     <uni-popup ref="message" type="message">
@@ -90,6 +96,11 @@
 </template>
 
 <script>
+  import {
+    ORDER_TYPE_MY_INVOLVED,
+    ORDER_TYPE_MY_CREATED
+  } from '@/common/enum-vars.js'
+
   export default {
     components: {},
     data() {
@@ -127,8 +138,15 @@
     },
     onLoad(params) {
       this.id = params.id
+      this.type = Number(params.type)
     },
     methods: {
+      isMyInvolved() {
+        return this.type === ORDER_TYPE_MY_INVOLVED
+      },
+      isMyCreated() {
+        return this.type === ORDER_TYPE_MY_CREATED
+      },
       onChangeCollapse(e) {
         let index = e.index;
         let item = this.dataList[index];
@@ -164,18 +182,6 @@
 
     .content {
       padding: 10rpx 20rpx;
-    }
-  }
-
-  .submit-bt-view {
-    display: flex;
-
-    .item {
-      flex: 1;
-    }
-
-    .share {
-      margin-left: 40rpx !important;
     }
   }
 </style>

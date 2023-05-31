@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view @touchmove.stop.prevent="stop()">
     <view class="tui-mask-screen" :class="[show?'tui-mask-show':'']" @tap="hide()"></view>
     <view class="tui-picker-box" :class="[show?'tui-pickerbox-show':'']">
       <view class="picker-header tui-list-item">
@@ -7,7 +7,7 @@
         <view class="title">时间</view>
         <view class="btn-sure" hover-class="tui-opcity" :hover-stay-time="150" @tap.stop="submit()">确定</view>
       </view>
-      <picker-view indicator-style="height: 50px;" class="picker-view" :value="pickerValue" @change="change">
+      <picker-view indicator-style="height: 50px;" class="picker-view" :value="changeValue" @change="change">
         <picker-view-column>
           <view v-for="(item, index) in level1" :key="index" class="item">{{item}}</view>
         </picker-view-column>
@@ -36,11 +36,17 @@
     watch: {
       visible(val) {
         this.show = val
+        // 设置默认时间
+        let defaulVal = this.value
+        if (this.value.length === 0) {
+          const current = new Date()
+          defaulVal = [current.getFullYear(), current.getMonth() + 1]
+        }
+        this.setDefaultValue(defaulVal)
       }
     },
     data() {
       return {
-        pickerValue: [],
         selected: [],
         changeValue: [],
         show: false,
@@ -53,16 +59,9 @@
     created() {
       this.level1 = this.getYears()
       this.level2 = this.getMonths()
-
-      // 设置默认时间
-      let defaulVal = this.value
-      if (this.value.length === 0) {
-        const current = new Date()
-        defaulVal = [current.getFullYear(), current.getMonth() + 1]
-      }
-      this.setDefaultValue(defaulVal)
     },
     methods: {
+      stop() {},
       getYears() {
         // 1990 - 现在
         const arr = []
@@ -82,7 +81,6 @@
       setDefaultValue(values) {
         const lv1Idx = this.level1.findIndex(item => item === values[0])
         const lv2Idx = this.level2.findIndex(item => item === values[1])
-        this.pickerValue = [lv1Idx, lv2Idx]
         this.changeValue = [lv1Idx, lv2Idx]
       },
       change(e) {

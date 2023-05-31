@@ -92,6 +92,16 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   height: 200rpx;
   margin: 20rpx auto;
   width: calc(100% - 80rpx);
+
+  .btns {
+     display: flex;
+     .item {
+       flex: 1;
+     }
+     .right {
+       margin-left: 40rpx !important;
+     }
+  }
 }
 
 //.placeholder-value {
@@ -926,3 +936,4 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 .margin-top-20 {
   margin-top: 20rpx
 }
+

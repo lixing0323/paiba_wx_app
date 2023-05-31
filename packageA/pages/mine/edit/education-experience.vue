@@ -42,8 +42,9 @@
       <button type="primary" @click="submit()" :disabled="loading">保存</button>
     </view>
 
-    <picker-date-selctor :value="startDate" :visible.sync="showStartDate" @change="onChangeStart" />
-    <picker-date-selctor :value="endDate" :visible.sync="showEndDate" @change="onChangeEnd" />
+    <picker-date-selctor v-if="showStartDate" :value="startDate" :visible.sync="showStartDate"
+      @change="onChangeStart" />
+    <picker-date-selctor v-if="showEndDate" :value="endDate" :visible.sync="showEndDate" @change="onChangeEnd" />
 
     <picker-education :visible="showPicker" :value="pickerValue" @close="showPicker=false" @change="onChangePicker" />
 

@@ -10,32 +10,36 @@
     </view>
 
     <view>
-      <mescroll-uni ref="mescrollRef" :height="mescrollHeight" @init="mescrollInit" @down="downCallback" :up="upOption"
+      <mescroll-body ref="mescrollRef" :height="mescrollHeight" @init="mescrollInit" @down="downCallback" :up="upOption"
         @up="getList" @emptyclick="emptyClick">
         <view>
           <view v-for="(l, index) in list" :key="index" class="business-content-top-20">
-            <ht-invite-card :item="l" @click-item="clickItem" />
+            <ht-invite-card :item="l" :type="ORDER_TYPE_MY_INVETED" @click-item="clickItem" />
           </view>
         </view>
-      </mescroll-uni>
+      </mescroll-body>
     </view>
   </view>
 </template>
 
 <script>
   import ListMixin from '@/mixins/listMixin.js';
-  import MescrollUni from 'mescroll-uni/mescroll-uni.vue'
+  import MescrollBody from 'mescroll-uni/mescroll-body.vue'
+  import {
+    ORDER_TYPE_MY_INVETED
+  } from '@/common/enum-vars.js'
   import {
     getTestList
   } from '@/apis/test.js'
 
   export default {
     components: {
-      MescrollUni
+      MescrollBody
     },
     mixins: [ListMixin],
     data() {
       return {
+        ORDER_TYPE_MY_INVETED,
         searchHeight: 36,
         currentTab: 0,
         tabs: ['全部', '待处理', '已同意', '已拒绝']
@@ -67,7 +71,7 @@
       },
       clickItem(row) {
         uni.navigateTo({
-          url: `/packageB/pages/invite/detail?id=1`
+          url: `/packageB/pages/invite/detail?id=1&type=${ORDER_TYPE_MY_INVETED}`
         })
       },
       changeTab(e) {

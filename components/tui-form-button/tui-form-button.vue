@@ -172,13 +172,13 @@
         return height
       },
       getBackground() {
-        return this.background || (uni && uni.$tui && uni.$tui.tuiFormButton.background) || '#51AA38';
+        return this.background || (uni && uni.$tui && uni.$tui.tuiFormButton.background) || '#1aad19';
       },
       getColor() {
         if (this.plain) {
-          return '#51AA38';
+          return '#1aad19';
         } else {
-          return this.color || (uni && uni.$tui && uni.$tui.tuiFormButton.color) || '# fff ';
+          return '#fff';
         }
       },
       getRadius() {

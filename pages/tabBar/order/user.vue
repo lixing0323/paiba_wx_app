@@ -14,7 +14,8 @@
         @emptyclick="emptyClick">
         <view>
           <view v-for="(l, index) in list" :key="index" class="margin-top-20">
-            <ht-order-card ref="order" :item="l" @click-item="onClickItem" @click-qr-code="onClickQrCode" />
+            <ht-order-card ref="order" :item="l" :type="getOrderType()" @click-item="onClickItem"
+              @click-qr-code="onClickQrCode" />
           </view>
         </view>
       </mescroll-body>
@@ -27,6 +28,11 @@
 <script>
   import ListMixin from '@/mixins/listMixin.js';
   import MescrollBody from 'mescroll-uni/mescroll-body'
+  import {
+    ORDER_TYPE_MY_CREATED,
+    ORDER_TYPE_MY_INVOLVED
+  } from '@/common/enum-vars.js'
+
   import {
     getTestList
   } from '@/apis/test.js'
@@ -55,6 +61,9 @@
     onLoad(params) {},
     onShow() {},
     methods: {
+      getOrderType() {
+        return this.currentTab === 0 ? ORDER_TYPE_MY_CREATED : ORDER_TYPE_MY_INVOLVED
+      },
       gotoSearch() {
         uni.navigateTo({
           url: `/packageB/pages/staff/order/search`
@@ -70,7 +79,7 @@
       },
       onClickItem(row) {
         uni.navigateTo({
-          url: `/packageB/pages/user/order/detail?id=1`
+          url: `/packageB/pages/user/order/detail?id=1&type=${this.getOrderType()}`
         })
       },
       onClickQrCode(row) {

@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view @touchmove.stop.prevent="stop()">
     <view class="tui-mask-screen" :class="[show?'tui-mask-show':'']" @tap="hide()"></view>
     <view class="tui-picker-box" :class="[show?'tui-pickerbox-show':'']">
       <view class="picker-header tui-list-item">
@@ -7,7 +7,8 @@
         <view class="title">学历</view>
         <view class="btn-sure" hover-class="tui-opcity" :hover-stay-time="150" @tap.stop="submit()">确定</view>
       </view>
-      <picker-view indicator-style="height: 50px;" class="picker-view" :value="pickerValue" @change="change">
+      <picker-view v-if="show" indicator-style="height: 50px;" class="picker-view" :value="changeValue"
+        @change="change">
         <picker-view-column>
           <view v-for="(item, index) in level1" :key="index" class="item">{{item}}</view>
         </picker-view-column>
@@ -38,11 +39,14 @@
     watch: {
       visible(val) {
         this.show = val
+
+        if (this.value.length > 0) {
+          this.setDefaultValue(this.value)
+        }
       }
     },
     data() {
       return {
-        pickerValue: [],
         selected: [],
         changeValue: [],
         show: false,
@@ -52,16 +56,12 @@
       }
     },
     computed: {},
-    created() {
-      if (this.value.length > 0) {
-        this.setDefaultValue(this.value)
-      }
-    },
+    created() {},
     methods: {
+      stop() {},
       setDefaultValue(values) {
         const lv1Idx = this.level1.findIndex(item => item === values[0])
         const lv2Idx = this.level2.findIndex(item => item === values[1])
-        this.pickerValue = [lv1Idx, lv2Idx]
         this.changeValue = [lv1Idx, lv2Idx]
       },
       change(e) {

@@ -45,7 +45,7 @@
       },
       zIndex: {
         type: Number,
-        default: undefined
+        default: 5000
       }
     },
     computed: {

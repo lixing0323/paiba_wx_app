@@ -76,6 +76,10 @@
     mapGetters
   } from 'vuex';
   import NewsCard from './news-card.vue'
+  import {
+    ORDER_TYPE_MY_INVETED,
+    ORDER_TYPE_INVITE_ME
+  } from '@/common/enum-vars.js'
 
 
   export default {
@@ -132,19 +136,19 @@
           url: `/pages/tabBar/homepage/search`
         });
       },
-      gotoInviteMe() {
-        uni.navigateTo({
-          url: `/packageB/pages/invite/invite-me`
-        })
-      },
       gotoMyInvitation() {
         uni.navigateTo({
-          url: `/packageB/pages/invite/my-invitation`
+          url: `/packageB/pages/invite/my-invitation?type=${ORDER_TYPE_MY_INVETED}`
+        })
+      },
+      gotoInviteMe() {
+        uni.navigateTo({
+          url: `/packageB/pages/invite/invite-me?type=${ORDER_TYPE_INVITE_ME}`
         })
       },
       gotoOrderDetail() {
         uni.navigateTo({
-          url: `/packageB/pages/invite/detail?invited=${true}`
+          url: `/packageB/pages/invite/detail?type=${ORDER_TYPE_INVITE_ME}`
         })
       }
     }

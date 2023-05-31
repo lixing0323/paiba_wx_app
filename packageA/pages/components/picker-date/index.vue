@@ -54,6 +54,7 @@
 <style lang="scss" scoped>
   .date-range-container {
     display: flex;
+    line-height: 46rpx;
 
     .icon {
       margin-right: 20rpx;

@@ -65,15 +65,34 @@
       </tui-form-item>
     </view>
 
-    <view class="submit-bt-view"><button type="primary" @click="submit()" :disabled="loading">申请</button></view>
+    <view v-if="isMyInvited()" class="submit-bt-view">
+      <view class="btns">
+        <tui-form-button class="item" type="primary" @click="onReject()">拒绝</tui-form-button>
+        <tui-form-button plain class="item right" @click="onAgreement()">同意</tui-form-button>
+      </view>
+    </view>
+    <view v-if="isInviteMe()" class="submit-bt-view">
+      <button type="primary" @click="submit()" :disabled="loading">申请</button>
+    </view>
 
     <uni-popup ref="message" type="message">
       <uni-popup-message type="success" :message="messageText" :duration="1500" />
     </uni-popup>
+
+    <ht-dialog :visible.sync="dialogVisible" title="拒绝" @click-right="onClickDialogOK()">
+      <view v-if="dialogVisible">
+        <tui-textarea isCounter autoHeight v-model="comment" textarea-border maxlength="100" placeholder="请填写拒绝的原因" />
+      </view>
+    </ht-dialog>
   </view>
 </template>
 
 <script>
+  import {
+    ORDER_TYPE_INVITE_ME,
+    ORDER_TYPE_MY_INVETED
+  } from '@/common/enum-vars.js'
+
   export default {
     components: {},
     data() {
@@ -81,6 +100,8 @@
         id: undefined,
         loading: false,
         messageText: '',
+        comment: '',
+        dialogVisible: false,
         a: '',
         form: {
           workGroup: ''
@@ -92,11 +113,27 @@
     },
     onLoad(params) {
       this.id = params.id
-      // type = true 被邀请, false为我邀请
-      this.type = Boolean(params.invited)
-      console.log(this.type)
+      this.type = Number(params.type)
     },
     methods: {
+      // 邀请我的
+      isInviteMe() {
+        return this.type === ORDER_TYPE_INVITE_ME
+      },
+      // 我邀请的
+      isMyInvited() {
+        return this.type === ORDER_TYPE_MY_INVETED
+      },
+      onAgreement() {
+
+      },
+      onReject() {
+        this.dialogVisible = true
+        this.comment = ''
+      },
+      onClickDialogOK() {
+        this.dialogVisible = false
+      },
       submit() {
         uni.navigateBack()
       }

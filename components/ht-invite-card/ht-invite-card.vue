@@ -5,8 +5,8 @@
       <view>邀请角色：灯光师</view>
       <view class="salary">总薪资：¥200 元<text class="day">（共2天）</text></view>
       <view class="work-date">工作时间：2023年5月1日 - 2023年6月1日</view>
-      <view class="line" v-if="!invited"></view>
-      <view v-if="!invited" class="status">
+      <view class="line" v-if="isMyInvited()"></view>
+      <view v-if="isMyInvited()" class="status">
         <view class="left">
           订单状态：
           <uni-tag class="tag" circle size="mini" text="已完结" type="success" />
@@ -20,6 +20,11 @@
 </template>
 
 <script>
+  import {
+    ORDER_TYPE_INVITE_ME,
+    ORDER_TYPE_MY_INVETED
+  } from '@/common/enum-vars.js'
+
   export default {
     components: {},
     props: {
@@ -27,15 +32,23 @@
         // type: Object,
         default: undefined
       },
-      invited: {
-        type: Boolean,
-        default: false
+      type: {
+        type: Number,
+        default: undefined
       }
     },
     data() {
       return {}
     },
     methods: {
+      // 邀请我的
+      isInviteMe() {
+        return this.type === ORDER_TYPE_INVITE_ME
+      },
+      // 我邀请的
+      isMyInvited() {
+        return this.type === ORDER_TYPE_MY_INVETED
+      },
       clickItem() {
         this.$emit('click-item', this.order)
       }

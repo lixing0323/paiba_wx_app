@@ -25,7 +25,7 @@
     {
       "path": "pages/tabBar/homepage/search",
       "style": {
-        "navigationBarTitleText": "服务",
+        "navigationBarTitleText": "搜索",
         "navigationBarTextStyle": "black"
       }
     },

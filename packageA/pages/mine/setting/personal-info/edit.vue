@@ -14,8 +14,8 @@
         </tui-form-item>
         <tui-form-item asterisk label="昵称">
           <template v-slot:right>
-            <input :value="form.nickName" type="nickName" class="input-view-value" placeholder="请填写"
-              @input="form.nickName = $event.detail.value" />
+            <input :value="form.nickName" type="nickname" class="input-view-value" placeholder="请填写"
+              @blur="onNickName" />
           </template>
         </tui-form-item>
         <tui-form-item asterisk label="性别">
@@ -271,6 +271,14 @@
           }
         })
         console.log('local=', this.form)
+      },
+      // 头像
+      onChooseAvatar(e) {
+        this.form.avatarUrl = e.detail.avatarUrl
+      },
+      // 昵称
+      onNickName(e) {
+        this.form.nickName = e.detail.value
       },
       // 身份证人像图
       onChangePortraitImages(urls) {

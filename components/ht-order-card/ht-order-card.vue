@@ -31,7 +31,7 @@
           订单状态：
           <uni-tag class="tag" circle size="mini" text="已完结" type="success" />
         </view>
-        <view class="right" @click.stop="gotoEvaluate()">
+        <view v-if="isMyCreated()" class="right" @click.stop="gotoEvaluate()">
           待评价 <text class="symbol"> > </text>
         </view>
       </view>
@@ -44,6 +44,11 @@
 </template>
 
 <script>
+  import {
+    ORDER_TYPE_MY_CREATED,
+    ORDER_TYPE_MY_INVOLVED
+  } from '@/common/enum-vars.js'
+
   export default {
     components: {},
     props: {
@@ -51,9 +56,9 @@
         // type: Object,
         default: undefined
       },
-      invited: {
-        type: Boolean,
-        default: false
+      type: {
+        type: Number,
+        default: undefined
       }
     },
     data() {
@@ -62,6 +67,12 @@
       }
     },
     methods: {
+      isMyCreated() {
+        return this.type === ORDER_TYPE_MY_CREATED
+      },
+      isMyInvolved() {
+        return this.type === ORDER_TYPE_MY_INVOLVED
+      },
       clickItem() {
         this.$emit('click-item', this.order)
       },

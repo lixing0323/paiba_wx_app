@@ -61,13 +61,28 @@
         poster.saveImage(this.qrCodeSrc)
       },
       onShare() {
-
+        uni.share({
+          provider: "weixin",
+          scene: "WXSceneSession",
+          type: 0,
+          href: "http://uniapp.dcloud.io/",
+          summary: "我正在使用HBuilderX开发uni-app，赶紧跟我一起来体验！",
+          imageUrl: "https://web-assets.dcloud.net.cn/unidoc/zh/uni@2x.png",
+          success: function(res) {
+            console.log("success:" + JSON.stringify(res));
+          },
+          fail: function(err) {
+            console.log("fail:" + JSON.stringify(err));
+          }
+        });
       }
     }
   };
 </script>
 
 <style lang="scss" scoped>
+  @import '@/common/business.scss';
+
   .land-container {
     background-color: #fff;
     width: calc(100% - 100rpx);
@@ -148,5 +163,20 @@
 
   .tui-share_text {
     margin-top: 10rpx;
+  }
+
+  .tui-btn__opentype {
+    background: transparent !important;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    border: 0;
+    z-index: 1;
+  }
+
+  .tui-btn__opentype::after {
+    border: 0;
   }
 </style>

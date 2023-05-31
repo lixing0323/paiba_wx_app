@@ -1,6 +1,7 @@
 <template>
   <view>
-    <customer-homepage />
+    <user-homepage />
+    <staff-homepage v-if="false" />
   </view>
 </template>
 
@@ -8,40 +9,16 @@
   import {
     mapGetters
   } from 'vuex';
-  import customerHomepage from './customer.vue';
-  import staffHomepage from './customer.vue';
-  import {
-    isCustomer,
-    isStaff,
-    isUnLoginUser,
-    isAdmin
-  } from '@/common/roles.js';
-  import {
-    getVersionControl,
-    login
-  } from '@/apis/user.js';
-  import {
-    getAdvert
-  } from '@/apis/desc.js';
-  import {
-    setAdvertStore,
-    getAdvertStore
-  } from '@/store/localStorage';
+  import UserHomepage from './user.vue';
+  import StaffHomepage from './user.vue';
 
   export default {
     components: {
-      customerHomepage,
-      staffHomepage
+      UserHomepage,
+      StaffHomepage
     },
     data() {
       return {};
-    },
-    onShareAppMessage() {
-      return {
-        title: '测试分享',
-        path: '/pages/tabBar/homepage/index',
-        imageUrl: ''
-      };
     },
     computed: {
       ...mapGetters(['token', 'userInfo'])

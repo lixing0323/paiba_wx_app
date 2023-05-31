@@ -84,8 +84,10 @@
     </view>
 
     <view class="submit-bt-view">
-      <tui-form-button class="item" type="primary" @click="onSubmit()" :loading="updateBtLoading">修改</tui-form-button>
-      <tui-form-button plain class="item share" @click="onCreateQrCode()">生成二维码</tui-form-button>
+      <view class="btns">
+        <tui-form-button class="item" type="primary" @click="onSubmit()" :loading="updateBtLoading">修改</tui-form-button>
+        <tui-form-button plain class="item right" @click="onCreateQrCode()">生成二维码</tui-form-button>
+      </view>
     </view>
 
     <ht-personal-qr-code :show.sync="dialogVisible" />
@@ -236,17 +238,5 @@
     .portrait-image {}
 
     .emblem-image {}
-  }
-
-  .submit-bt-view {
-    display: flex;
-
-    .item {
-      flex: 1;
-    }
-
-    .share {
-      margin-left: 40rpx !important;
-    }
   }
 </style>
