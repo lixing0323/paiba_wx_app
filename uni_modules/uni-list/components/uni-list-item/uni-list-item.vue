@@ -16,7 +16,7 @@
             </view>
             <view v-else-if="showExtraIcon" class="uni-list-item__icon">
               <uni-icons :customPrefix="extraIcon.customPrefix" :color="extraIcon.color" :size="extraIcon.size"
-                :type="extraIcon.type" />
+                :type="extraIconType || extraIcon.type" />
             </view>
           </view>
         </slot>
@@ -161,13 +161,17 @@
         type: [Boolean, String],
         default: false
       },
+      extraIconType: {
+        type: String,
+        default: undefined
+      },
       extraIcon: {
         type: Object,
         default () {
           return {
             type: '',
-            color: '#000000',
-            size: 20,
+            color: '#bbbbbb',
+            size: 22,
             customPrefix: ''
           };
         }

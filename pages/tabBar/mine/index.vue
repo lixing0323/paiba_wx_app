@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="mine-user-info-container mine-container">
-      <view @click="onClick" style="display: flex;flex: 3;align-items: center">
+      <view @click="onClick" class="info-view">
         <view class="user-pic">
           <image :src="userInfo.avatarUrl || require('@/static/icon/avatar.png')" />
         </view>
@@ -19,19 +19,30 @@
           </template>
         </view>
       </view>
+      <view v-if="userInfo" class="settting">
+        <uni-icons type="gear" :size="25" color="#333" @click="gotoPersonalInfo()"></uni-icons>
+      </view>
     </view>
 
     <view class="list-view">
       <uni-list>
-        <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="accountIcon" title="我的帐号"
-          @click="gotoAccount()" />
-        <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="serviceIcon" title="平台客服"
+        <button open-type="getPhoneNumber" @getphonenumber="getPhone()">
+          <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="phone-filled" title="绑定手机号"
+            rightText="13121211212" />
+        </button>
+        <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="person" title="个人信息预览并分享"
+          @click="gotoPreviewPersonal()" />
+        <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="headphones" title="平台客服"
           @click="gotoCustomerService()" />
-        <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="feedbackIcon" title="意见反馈"
+        <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="mail-open-filled" title="意见反馈"
           @click="gotoFeedback()" />
-        <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="settingIcon" title="我的设置"
-          @click="gotoSetting()" />
-        <uni-list-item :show-extra-icon="true" link showArrow :extra-icon="exitIcon" title="退出登录" @click="onExit()" />
+        <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="plus-filled" title="加入我们"
+          @click="gotoJoinUs()" />
+        <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="auth-filled" title="成为商户/入驻申请"
+          @click="gotoSettledIn()" />
+        <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="map-filled" title="用户协议"
+          @click="gotoAgreement()" />
+        <uni-list-item :show-extra-icon="true" link showArrow extra-icon-type="undo" title="退出登录" @click="onExit()" />
       </uni-list>
     </view>
   </view>
@@ -46,35 +57,7 @@
     components: {},
     props: {},
     data() {
-      return {
-        emptyImg: require('@/static/icon/avatar.png'),
-        customerInfo: {},
-        accountIcon: {
-          color: '#bbbbbb',
-          size: '22',
-          type: 'staff-filled'
-        },
-        serviceIcon: {
-          color: '#bbbbbb',
-          size: '22',
-          type: 'headphones'
-        },
-        feedbackIcon: {
-          color: '#bbbbbb',
-          size: '22',
-          type: 'mail-open-filled'
-        },
-        settingIcon: {
-          color: '#bbbbbb',
-          size: '22',
-          type: 'gear-filled'
-        },
-        exitIcon: {
-          color: '#bbbbbb',
-          size: '22',
-          type: 'undo'
-        }
-      };
+      return {};
     },
     computed: {
       ...mapGetters(['token', 'userInfo'])
@@ -88,10 +71,8 @@
           this.gotoAvatar()
         }
       },
-      gotoAccount() {
-        uni.navigateTo({
-          url: `/packageA/pages/mine/account/index`
-        });
+      getPhone(e) {
+        console.log(e)
       },
       gotoCustomerService() {
         uni.navigateTo({
@@ -118,6 +99,24 @@
           url: `/packageA/pages/mine/edit/avatar`
         })
       },
+      gotoPersonalInfo() {
+        uni.navigateTo({
+          url: `/packageA/pages/mine/setting/personal-info/edit`
+        });
+      },
+      gotoJoinUs() {
+        uni.navigateTo({
+          url: `/packageA/pages/mine/setting/join-us/index`
+        });
+      },
+      gotoSettledIn() {
+        uni.navigateTo({
+          url: `/packageA/pages/mine/setting/settled-in/index`
+        });
+      },
+      gotoAgreement() {
+        console.log('用户协议')
+      },
       onExit() {
         uni.showModal({
           content: '你是否要退出登录？',
@@ -143,4 +142,22 @@
 <style lang="scss" scoped>
   @import '@/common/uni-nvue.css';
   @import '@/common/business.scss';
+
+  ::v-deep .list-view button {
+    padding-right: 0;
+    line-height: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    background-color: transparent;
+  }
+
+  ::v-deep .list-view button::after {
+    border: 0;
+  }
+
+  .edit-avatar-icon {
+    margin-right: 30rpx;
+  }
 </style>

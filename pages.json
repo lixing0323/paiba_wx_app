@@ -28,12 +28,6 @@
         "navigationBarTitleText": "搜索",
         "navigationBarTextStyle": "black"
       }
-    },
-    {
-      "path": "pages/loadingPage/index",
-      "style": {
-        "navigationBarTitleText": "成功"
-      }
     }
   ],
   "subPackages": [{
@@ -61,12 +55,6 @@
           "path": "pages/mine/feedback/index",
           "style": {
             "navigationBarTitleText": "意见反馈"
-          }
-        },
-        {
-          "path": "pages/mine/setting/index",
-          "style": {
-            "navigationBarTitleText": "我的设置"
           }
         },
         {

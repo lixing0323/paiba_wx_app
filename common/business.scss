@@ -721,10 +721,17 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //border-radius: 10px;
   width: calc(100% - 40rpx);
-  //margin-left: 3%;
-  //justify-content: space-around;
+
+  .info-view {
+    display: flex;
+    flex: 3;
+    align-items: center
+  }
+  
+  .setting {
+    
+  }
 
   .user-info {
     margin-left: 2%;
