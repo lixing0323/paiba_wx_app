@@ -278,8 +278,8 @@
       },
       {
         "pagePath": "pages/tabBar/order/index",
-        "iconPath": "static/nav/service_1.png",
-        "selectedIconPath": "static/nav/service_2.png",
+        "iconPath": "static/nav/order_1.png",
+        "selectedIconPath": "static/nav/order_2.png",
         "text": "工单"
       },
       {

@@ -31,17 +31,15 @@
 
     <view class="invite-view">
       <view class="left" @click="gotoInviteMe()">
-        <image :src="inviteImgSrc" class="image" mode="aspectFill" />
-        <view class="name">邀请我的</view>
+        <image :src="inviteMeImgSrc" class="image" mode="scaleToFill" />
       </view>
       <view class="right" @click="gotoMyInvitation()">
-        <image :src="inviteImgSrc" class="image" mode="aspectFill" />
-        <view class="name">我邀请的</view>
+        <image :src="myInvitionImgSrc" class="image" mode="scaleToFill" />
       </view>
     </view>
 
-    <view class="video-button">
-      <button>视频教程/视频号</button>
+    <view class="video-view">
+      <image :src="videoImgSrc" class="image" mode="scaleToFill" />
     </view>
 
     <view class="hot-view">
@@ -94,11 +92,13 @@
         listQuery: {
           search: ''
         },
-        inviteImgSrc: require('@/static/temp/empty.png'),
+        inviteMeImgSrc: require('@/static/homepage/invite_me.png'),
+        myInvitionImgSrc: require('@/static/homepage/my_invition.png'),
+        videoImgSrc: require('@/static/homepage/video_class.png'),
         currentTab: 0,
         banners: [{
             id: 1,
-            imageUrl: require('@/static/temp/1.png')
+            imageUrl: require('@/static/temp/2.png')
           },
           {
             id: 2,
@@ -257,7 +257,7 @@
     justify-content: center;
     justify-items: center;
     text-align: center;
-    margin-top: 40rpx;
+    margin-top: 20rpx;
 
     .left {
       flex: 1;
@@ -268,8 +268,9 @@
     }
 
     .image {
-      width: 100rpx;
-      height: 100rpx;
+      width: 100%;
+      height: 160rpx;
+      border-radius: 20rpx;
     }
 
     .name {
@@ -277,8 +278,13 @@
     }
   }
 
-  .video-button {
-    margin: 20rpx 0;
+  .video-view {
+    width: 100%;
+
+    .image {
+      width: 100%;
+      height: 120rpx;
+    }
   }
 
   .hot-view {

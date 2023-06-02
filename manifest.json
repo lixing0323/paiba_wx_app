@@ -73,7 +73,7 @@
         },
         "oauth": {
           "weixin": {
-            "appid": "wxc35e4b10efba0698",
+            "appid": "wxbb8f10703f1496bf",
             "appsecret": "",
             "UniversalLinks": ""
           }
@@ -105,8 +105,8 @@
     "versionCode": 100
   },
   "mp-weixin": {
-    // "appid": "wxbb8f10703f1496bf",
-    "appid": "wxc35e4b10efba0698",
+    "appid": "wxbb8f10703f1496bf",
+    // "appid": "wxc35e4b10efba0698",
     "setting": {
       "urlCheck": false,
       "postcss": true,

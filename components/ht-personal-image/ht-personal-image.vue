@@ -1,7 +1,7 @@
 <template>
   <view class="landscape">
     <tui-landscape :show="show" :position="2" @close="close">
-      <view class="land-container">
+      <view ref="html" class="land-container">
         <view class="logo-container">
           <view class="logo-view">
             <image class="logo" :src="logoSrc" :data-src="logoSrc" mode="widthFix"></image>
@@ -41,7 +41,7 @@
   import {
     mapGetters
   } from 'vuex';
-  import poster from '@/common/poster.js'
+  import Wxml2Canvas from "wxml2canvas"
 
   export default {
     components: {},
@@ -68,9 +68,7 @@
       close() {
         this.$emit("update:show", false)
       },
-      onSave() {
-        poster.saveImage(this.qrCodeSrc)
-      },
+      onSave() {},
       onShare() {
         uni.share({
           provider: "weixin",

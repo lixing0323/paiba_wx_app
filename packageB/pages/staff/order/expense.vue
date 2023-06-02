@@ -9,7 +9,7 @@
         <tui-textarea isCounter autoHeight v-model="form.reason" textarea-border maxlength="200"
           placeholder="请填写报销事由" />
       </tui-form-item>
-      <tui-form-item asterisk direction="column" label="上传报销凭证图片（选填，最多9张）" content-margin-top="8px">
+      <tui-form-item asterisk direction="column" label="上传图片（选填，最多9张）" content-margin-top="8px">
         <template>
           <view class="input-view">
             <ht-upload-files style="width: 100%;" ref="images" :limit="9" @selection-change="onChangeImages" />

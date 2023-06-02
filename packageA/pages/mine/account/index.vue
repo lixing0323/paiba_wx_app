@@ -1,7 +1,7 @@
 <template>
   <view>
     <view class="mine-user-info-container mine-container">
-      <view @click="onLogin" style="display: flex;flex: 3;align-items: center">
+      <view @click="onClick" style="display: flex;flex: 3;align-items: center">
         <view class="user-pic">
           <image :src="userInfo.avatarUrl" />
         </view>
@@ -63,10 +63,25 @@
     },
     created() {},
     methods: {
-      gotoPhone() {
+      onClick() {
+        if (!this.userInfo) {
+          this.gotoLogin()
+        } else {
+          this.gotoAvatar()
+        }
+      },
+      gotoLogin() {
+        uni.reLaunch({
+          url: `/packageA/pages/login/index`
+        });
+      },
+      gotoAvatar() {
         uni.navigateTo({
-          url: `/packageA/pages/mine/edit/phone`
+          url: `/packageA/pages/mine/edit/avatar`
         })
+      },
+      gotoPhone(e) {
+        console.log(e)
       }
     }
   };

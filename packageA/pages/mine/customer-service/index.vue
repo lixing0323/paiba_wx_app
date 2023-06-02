@@ -11,7 +11,7 @@
     props: {},
     data() {
       return {
-        imageSrc: require('@/static/temp/service.png')
+        imageSrc: require('@/static/icon/customer_service.png')
       };
     },
     computed: {},
